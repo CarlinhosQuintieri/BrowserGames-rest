@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<body>
+    <div class="row">
+        <div class="column">
+            <table>
+                <h2 class="text"> Ja tenho cadastro </h2>
+                <tr> <td>UserName:</td> <td><input type="text" id="txtCategoria"></td> </tr>
+                <tr> <td>Senha:</td> <td><input type="text" id="txtUrl"></td> </tr>
+                <tr><td></td><td>
+                    <input type="button" value="Entrar" onclick="salvarGame()" id="btnEntrar" class="btn btn-outline-secondary">
+                </td></tr>             
+            </table>
+        </div>
+        <div class="column">
+            <table>
+                <h2 class="text"> Quero me cadastrar </h2>
+                <tr> <td>Nome:</td> <td><input type="text" id="txtNome2"></td> </tr>
+                <tr> <td>UserName:</td> <td><input type="text" id="txtUserName"></td> </tr>
+                <tr> <td>Senha:</td> <td><input type="text" id="txtSenha"></td> </tr>
+                <tr> <td>Data De Nascimento:</td> <td><input type="date" id="dateNascimento"></td> </tr>
+                <tr> <td>Estado:</td> <td><input type="text" id="txtEstado"></td> </tr>
+                <tr> <td>Pais:</td> <td><input type="text" id="txtPais"></td> </tr>
+
+                <tr><td></td><td>
+                    <input type="button" value="Salvar" onclick="salvarUsuario()" id="btnCadastrar" class="btn btn-outline-secondary">
+                </td></tr>             
+            </table>
+        </div>
+    </div>
+    <script>
+        const txtNome2 = document.querySelector('#txtNome2');
+        const txtUserName = document.querySelector('#txtUserName');
+        const txtSenha = document.querySelector('#txtSenha');
+        const dateNascimento = document.querySelector('#dateNascimento');
+        const txtEstado = document.querySelector('#txtEstado');
+        const txtPais = document.querySelector('#txtPais');
+        const txtId2 = document.querySelector('#txtId');
+        const btnCadastrar = document.querySelector('#btnCadastrar');
+
+        inicializar();
+
+        // inicializa igual em games mas para o cadastrar.
+        function inicializar2() {
+            paragrafoMensagem.innerHTML =  'Pressione o botão Novo Para comecar a cadastrar um novo usuario:';
+            txtId2.value = '';
+            txtNome2.value = '';
+            txtUserName.value = '';
+            txtSenha.value = '';
+            dateNascimento.value = '';
+            txtEstado.value = '';
+            txtPais.value = '';
+            txtId2.disabled = true;
+            txtNome.disabled = true;
+            txtUserName.disabled = true;
+            txtSenha.disabled = true;
+            dateNascimento.disabled = true;
+            txtEstado.disabled = true;
+            txtPais.disabled = true;
+            btnNovo.disabled = false;
+            btnCadastrar.disabled = true;
+            criandoNovoGame = false;
+        }
+        // cria novo usuario, precisa de nova tabela no BD
+        function novoUsuario() {
+            criandoNovoUsuario = true; 
+            txtId2.value = '';
+            txtNome2.value = '';
+            txtUserName.value = '';
+            txtSenha.value = '';
+            dateNascimento.value = '';
+            txtEstado.value = '';
+            txtPais.value = '';
+            txtNome2.disabled = true;
+            txtNome2.disabled = false;
+            txtUserName.disabled = false;
+            txtSenha.disabled = false;
+            dateNascimento.disabled = false;
+            txtEstado.disabled = false;
+            txtPais.disabled = false;
+            btnCadastrar.disabled = false;
+                
+        }
+        async function salvarUsuario() {
+            if (criandoNovoUsuario) {
+                fetch('/api/usuarios', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        'nome': txtNome2.value,
+                        'UserName': txtUserName.value,
+                        'Senha': txtSenha.value,
+                        'data Nascimento': dateNascimento.value,
+                        'estado': txtEstado.value,
+                        'pais': txtPais.value
+                        
+                    }),
+                    headers: {'Content-type': 'application/json'}
+                })
+                .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
+                .then(resposta => resposta.json())
+                .then(json => inicializar2())
+                .catch(function(error) {
+                    paragrafo.innerHTML = "Erro ao criar usuario (código " + error.message + ")";
+                });  
+            }  
+        }
+
+    </script>
+</body>
+</html>
