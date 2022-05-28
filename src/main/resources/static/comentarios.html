@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-    	<title>Games</title>
+    	<title>Comentarios</title>
         <meta charset="UTF-8">
 		<link rel="stylesheet" href="style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -10,7 +10,7 @@
 	<header>
         // hamburguer
         <nav class="navbar">
-            <a href="Home.html" class="nav-branding">Browser Games</a>
+            <a href="" class="nav-branding">Browser Games</a>
 
             <ul class="nav-menu">
                 <li class="nav-item">
@@ -18,8 +18,6 @@
                 </li>
                 <li class="nav-item">
                     <a href="categoria.html" class="nav-link">Categoria</a>
-                </li><li class="nav-item">
-                    <a href="" class="nav-link">Comentarios</a>
                 </li>
             </ul>
             <div class="hamburguer">
@@ -31,18 +29,16 @@
         </nav>
         // fim do hamburguer
     </header>
-
+	
     <body>
 		<div>
-			<h1>Gerenciador Do BrowserGames</h1>
+			<h1>Gerenciador De comentarios</h1>
+			<a class="flex" href="Login.html"></a>
 		</div>
         <table class="table">
             <tr> <td>ID:</td> <td><input type="text" id="txtId"></td> </tr>
             <tr> <td>Nome:</td> <td><input type="text" id="txtNome"></td> </tr>
-            <tr> <td>Categoria:</td> <td><input type="text" id="txtCategoria"></td> </tr>
-            <tr> <td>Url:</td> <td><input type="text" id="txtUrl"></td> </tr>
-            <tr> <td>Descrição:</td> <td><input type="text" id="txtDescricao"></td> </tr>
-            <tr> <td>Imagem:</td> <td><input type="text" id="txtImagem"></td> </tr>
+            <tr> <td>Comentario:</td> <td><input type="text" id="txtComentario"></td> </tr>
             <tr><td></td><td>
                 <input type="button" value="Novo" onclick="novoGame()" id="btnNovo" class="btn btn-outline-secondary">
                 <input type="button" value="Salvar" onclick="salvarGame()" id="btnSalvar" class="btn btn-outline-secondary">
@@ -54,7 +50,7 @@
         <p style="font-weight:bold" id="paragrafoMensagem"></p>
 
         <table class="table">    
-            <tr> <th scope="col" >ID</th> <th scope="col" >Nome</th> <th scope="col" >Categoria</th> <th>Url</th> <th scope="col"> Descrição</th>  <th scope="col">Imagem</th>  </tr>   
+            <tr> <th scope="col" >ID</th> <th scope="col" >Nome</th> <th scope="col" >Comentario</th></tr>   
                                            
             <tbody id="corpoTabelaGames"> </tbody>
         </table>
@@ -64,7 +60,7 @@
 				const corpoTabela = document.querySelector('#corpoTabelaGames');
 				const paragrafoMensagem = document.querySelector('#paragrafoMensagem');
 				const txtNome = document.querySelector('#txtNome');
-				const txtCategoria = document.querySelector('#txtCategoria');
+				const txtComentario = document.querySelector('#txtComentario');
 				const txtUrl = document.querySelector('#txtUrl');
 				const txtDescricao = document.querySelector('#txtDescricao');
 				const txtImagem = document.querySelector('#txtImagem');
@@ -79,19 +75,11 @@
 				inicializar();
 
 				function inicializar() {
-				    paragrafoMensagem.innerHTML =  'Pressione o botão Novo ou selecione um Game da lista:';
-				    txtId.value = '';
+				    paragrafoMensagem.innerHTML =  'Pressione o botão Novo ou selecione uma Comentario da lista:';
 				    txtNome.value = '';
-				    txtCategoria.value = '';
-				    txtUrl.value = '';
-				    txtDescricao.value = '';
-				    txtImagem.value = '';
-				    txtId.disabled = true;
+				    txtComentario.value = '';
 				    txtNome.disabled = true;
-				 	txtCategoria.disabled = true;
-				   	txtUrl.disabled = true;
-				   	txtDescricao.disabled = true;
-				    txtImagem.disabled = true;
+				 	txtComentario.disabled = true;
 				    btnNovo.disabled = false;
 				    btnSalvar.disabled = true;
 				    btnApagar.disabled = true;
@@ -115,31 +103,16 @@
 						for (var i=0; i<n; i++) {
 							var g = games[i];
 							linhasTabela += 
-								`<tr><td><a href="javascript:void(0)" onclick="selecionarGame('${g.id}', '${g.nome}', '${g.categoria}', '${g.url}','${g.descricao}','${g.imagem}')">`
-							             + g.id     + '</a></td>' + 
-			                    '<td>' + g.nome   + '</td>' +
-			                    '<td>' + g.categoria   + '</td>' +
-			                    '<td>' + g.url   + '</td>' +
-			                    '<td>' + g.descricao + '</td>'+
-			                    '<td>'+ g.imagem + '</td></tr>\n';
+								`<tr><td><a href="javascript:void(0)" onclick="selecionarGame('${g.nome}', '${g.Comentario})">`
+			                    '<td>' + g.Comentario   + '</td>'
 						}          
 						corpoTabela.innerHTML = linhasTabela;
 					}
 					
-					function selecionarGame(id, nome, categoria, url, descricao, imagem) {
-					    paragrafoMensagem.innerHTML = 'Altere e salve os dados do jogo, ou então apague o registro do jogo.'
-					    txtId.value = id;
-					    txtNome.value = nome;
-					    txtCategoria.value = categoria;
-					    txtUrl.value= url;
-					    txtDescricao.value = descricao;
-					    txtImagem.value = imagem;
-					    txtId.disabled = true;
-					    txtNome.disabled = false;
-					 	txtCategoria.disabled = false;
-					   	txtUrl.disabled = false;
-					   	txtDescricao.disabled = false;
-					    txtImagem.disabled = false;
+					function selecionarGame(Comentario) {
+					    paragrafoMensagem.innerHTML = 'Altere e salve os dados da Comentario, ou então apague o registro da Comentario.'
+					    txtComentario.value = Comentario;
+					 	txtComentario.disabled = false;
 					    btnNovo.disabled = true;
 					    btnSalvar.disabled = false;
 					    btnApagar.disabled = false;
@@ -147,20 +120,10 @@
 					}
 					
 					function novoGame() {
-					    paragrafoMensagem.innerHTML = 'Preencha os dados do novo jogo...';
+					    paragrafoMensagem.innerHTML = 'Preencha os dados da nova Comentario...';
 					    criandoNovoGame = true; 
-					    txtId.value = '';
-					    txtNome.value = '';
-					    txtCategoria.value = '';
-					    txtUrl.value = '';
-					    txtDescricao.value = '';
-					    txtImagem.value = '';
-					    txtId.disabled = true;
-					    txtNome.disabled = false;
-					 	txtCategoria.disabled = false;
-					   	txtUrl.disabled = false;
-					   	txtDescricao.disabled = false;
-					    txtImagem.disabled = false;
+					    txtComentario.value = '';
+					 	txtComentario.disabled = false;
 					    btnNovo.disabled = true;
 					    btnSalvar.disabled = false;
 					    btnApagar.disabled = true;
@@ -174,10 +137,7 @@
 					            method: 'POST',
 					            body: JSON.stringify({
 					                'nome': txtNome.value,
-					                'categoria': txtCategoria.value,
-					                'url': txtUrl.value,
-					                'descricao': txtDescricao.value,
-					                'imagem': txtImagem.value
+					                'Comentario': txtComentario.value,
 					               
 					            }),
 					            headers: {'Content-type': 'application/json'}
@@ -186,7 +146,7 @@
 					        .then(resposta => resposta.json())
 					        .then(json => inicializar())
 					        .catch(function(error) {
-					            paragrafo.innerHTML = "Erro ao criar jogos (código " + error.message + ")";
+					            paragrafo.innerHTML = "Erro ao criar Comentario (código " + error.message + ")";
 					        });  
 					    }
 					    else {
@@ -194,11 +154,7 @@
 					            method: 'PUT',
 					            body: JSON.stringify({
 					                'id': txtId.value,
-					                'nome': txtNome.value,
-					                'categoria': txtCategoria.value,
-					                'url': txtUrl.value,
-					                'descricao': txtDescricao.value,
-					                'imagem': txtImagem.value
+					                'Comentario': txtComentario.value,
 					            }),
 					            headers: {'Content-type': 'application/json'}
 					        })
@@ -206,7 +162,7 @@
 					        .then(resposta => resposta.json())
 					        .then(json => inicializar())
 					        .catch(function(error) {
-					            paragrafo.innerHTML = "Erro ao alterar jogos (código " + error.message + ")";
+					            paragrafo.innerHTML = "Erro ao alterar Comentario (código " + error.message + ")";
 					        });         
 					    }  
 					}
