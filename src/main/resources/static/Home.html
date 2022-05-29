@@ -9,7 +9,6 @@
     </head>
 
 	<header>
-        // hamburguer
         <nav class="navbar">
             <a href="" class="nav-branding">Browser Games</a>
 			<a class="flex" href="Login.html"></a>
@@ -31,7 +30,6 @@
 
             </div>
         </nav>
-        // fim do hamburguer
     </header>
     
 	<body>
@@ -62,10 +60,13 @@
 				const btnSalvar = document.querySelector('#btnSalvar');
 				const btnApagar = document.querySelector('#btnApagar');
 				const btnCancelar = document.querySelector('#btnCancelar');
+				const hamburguer = document.querySelector(".hamburguer");
+                const navMenu = document.querySelector(".nav-menu");
 				var criandoNovoGame = false;
 				
 				
 				inicializar();
+				hamburguer();
 
 				function inicializar() {
 				    txtId.value = '';
@@ -87,11 +88,9 @@
 				    criandoNovoGame = false;
 				    listarTodosGames();
 				}
+				function hamburguer(){
 
-				//menu hamburguer
-                const hamburguer = document.querySelector(".hamburguer");
-                const navMenu = document.querySelector(".nav-menu");
-
+				
                 hamburguer.addEventListener("click",() => {
                     hamburguer.classList.toggle("active")
                     navMenu.classList.toggle("active")
@@ -101,8 +100,7 @@
                     hamburguer.classList.remove("active")
                     navMenu.classList.remove("active")
                 }))
-                // fim do menu hamburguer
-
+			}
 				async function listarTodosGames() {
 				fetch('/api/games')
 				    .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
