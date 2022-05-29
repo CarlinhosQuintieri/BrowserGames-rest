@@ -37,7 +37,7 @@
 		</div>
         <table class="table">
             <tr> <td>ID:</td> <td><input type="text" id="txtId"></td> </tr>
-            <tr> <td>Nome:</td> <td><input type="text" id="txtNome"></td> </tr>
+            <tr> <td>Nome:</td> <td><input type="text" id="nomeCat"></td> </tr>
             <tr> <td>Categoria:</td> <td><input type="text" id="txtCategoria"></td> </tr>
             <tr><td></td><td>
                 <input type="button" value="Novo" onclick="novoGame()" id="btnNovo" class="btn btn-outline-secondary">
@@ -59,7 +59,7 @@
         <script>
 				const corpoTabela = document.querySelector('#corpoTabelaGames');
 				const paragrafoMensagem = document.querySelector('#paragrafoMensagem');
-				const txtNome = document.querySelector('#txtNome');
+				const nomeCat = document.querySelector('#nomeCat');
 				const txtCategoria = document.querySelector('#txtCategoria');
 				const txtUrl = document.querySelector('#txtUrl');
 				const txtDescricao = document.querySelector('#txtDescricao');
@@ -76,9 +76,9 @@
 
 				function inicializar() {
 				    paragrafoMensagem.innerHTML =  'Pressione o botão Novo ou selecione uma categoria da lista:';
-				    txtNome.value = '';
+				    nomeCat.value = '';
 				    txtCategoria.value = '';
-				    txtNome.disabled = true;
+				    nomeCat.disabled = true;
 				 	txtCategoria.disabled = true;
 				    btnNovo.disabled = false;
 				    btnSalvar.disabled = true;
@@ -136,7 +136,7 @@
 					        fetch('/api/games', {
 					            method: 'POST',
 					            body: JSON.stringify({
-					                'nome': txtNome.value,
+					                'nome': nomeCat.value,
 					                'categoria': txtCategoria.value,
 					               
 					            }),
