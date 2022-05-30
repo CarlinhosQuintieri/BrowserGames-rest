@@ -31,14 +31,16 @@
 	
     <body>
 		<div>
-			<h1>Gerenciador De categorias</h1>
-			<a class="flex" href="Login.html"></a>
+			<h1>Lista de Jogos</h1>
 		</div>
-        <table class="table">
-            <tr style="display: none;"> <td>ID:</td> <td><input type="text" id="txtId"></td> </tr>
-            <tr style="display: none;"> <td>Nome:</td> <td><input type="text" id="nomeCat"></td> </tr>
+        <table class="table" >
+            <tr> <td>ID:</td> <td><input type="text" id="txtId"></td> </tr>
+            <tr style="display: none;"> <td>Nome:</td> <td><input type="text" id="txtNome"></td> </tr>
             <tr> <td>Categoria:</td> <td><input type="text" id="txtCategoria"></td> </tr>
-            <tr><td></td><td>
+            <tr style="display: none;"> <td>Url:</td> <td><input type="text" id="txtUrl"></td> </tr>
+            <tr style="display: none;"> <td>Descrição:</td> <td><input type="text" id="txtDescricao"></td> </tr>
+            <tr style="display: none;"> <td>Imagem:</td> <td><input type="text" id="txtImagem"></td> </tr>
+			<tr><td></td><td>
                 <input type="button" value="Novo" onclick="novoGame()" id="btnNovo" class="btn btn-outline-secondary">
                 <input type="button" value="Salvar" onclick="salvarGame()" id="btnSalvar" class="btn btn-outline-secondary">
                 <input type="button" value="Apagar" onclick="apagarGame()" id="btnApagar" class="btn btn-outline-secondary">
@@ -49,7 +51,7 @@
         <p style="font-weight:bold" id="paragrafoMensagem"></p>
 
         <table class="table">    
-            <tr> <th scope="col" >ID</th> <th scope="col" >Nome</th> <th scope="col" >Categoria</th></tr>   
+            <tr> <th scope="col" >ID</th> <th scope="col" >Nome</th> <th scope="col" >Categoria</th> <th>Url</th> <th scope="col"> Descrição</th>  <th scope="col">Imagem</th>  </tr>   
                                            
             <tbody id="corpoTabelaGames"> </tbody>
         </table>
@@ -58,7 +60,7 @@
         <script>
 				const corpoTabela = document.querySelector('#corpoTabelaGames');
 				const paragrafoMensagem = document.querySelector('#paragrafoMensagem');
-				const nomeCat = document.querySelector('#nomeCat');
+				const txtNome = document.querySelector('#txtNome');
 				const txtCategoria = document.querySelector('#txtCategoria');
 				const txtUrl = document.querySelector('#txtUrl');
 				const txtDescricao = document.querySelector('#txtDescricao');
@@ -74,12 +76,18 @@
 				inicializar();
 
 				function inicializar() {
-				    paragrafoMensagem.innerHTML =  'Pressione o botão Novo ou selecione uma categoria da lista:';
-				    nomeCat.value = '';
+				    txtId.value = '';
+				    txtNome.value = '';
 				    txtCategoria.value = '';
-					txtId.disabled = true;
-				    nomeCat.disabled = true;
+				    txtUrl.value = '';
+				    txtDescricao.value = '';
+				    txtImagem.value = '';
+				    txtId.disabled = true;
+				    txtNome.disabled = true;
 				 	txtCategoria.disabled = true;
+				   	txtUrl.disabled = true;
+				   	txtDescricao.disabled = true;
+				    txtImagem.disabled = true;
 				    btnNovo.disabled = false;
 				    btnSalvar.disabled = true;
 				    btnApagar.disabled = true;
@@ -103,8 +111,13 @@
 						for (var i=0; i<n; i++) {
 							var g = games[i];
 							linhasTabela += 
-								`<tr><td><a href="javascript:void(0)" onclick="selecionarGame('${g.nome}', '${g.categoria})">`
-			                    '<td>' + g.categoria   + '</td>'
+								`<tr><td><a href="javascript:void(0)" onclick="selecionarGame('${g.id}', '${g.nome}', '${g.categoria}', '${g.url}','${g.descricao}','${g.imagem}')">`
+							             + g.id     + '</a></td>' + 
+			                    '<td>' + g.nome   + '</td>' +
+			                    '<td>' + g.categoria   + '</td>' +
+			                    '<td>' + g.url   + '</td>' +
+			                    '<td>' + g.descricao + '</td>'+
+			                    '<td>'+ g.imagem + '</td></tr>\n';
 						}          
 						corpoTabela.innerHTML = linhasTabela;
 					}
@@ -136,7 +149,6 @@
 					        fetch('/api/games', {
 					            method: 'POST',
 					            body: JSON.stringify({
-					                'nome': nomeCat.value,
 					                'categoria': txtCategoria.value,
 					               
 					            }),
