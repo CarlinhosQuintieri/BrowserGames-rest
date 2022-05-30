@@ -9,7 +9,7 @@
     
 	<header>
         <nav class="navbar">
-            <a href="" class="nav-branding">Browser Games</a>
+            <a href="Home.html" class="nav-branding">Browser Games</a>
 			<a class="flex" href="Login.html"></a>
 
             <ul class="nav-menu">
@@ -17,7 +17,7 @@
                     <a href="Avaliacao.html" class="nav-link">Avaliação</a>
                 </li>
 				<li class="nav-item">
-                    <a href="" class="nav-link">Comentarios</a>
+                    <a href="comentarios.html" class="nav-link">Comentarios</a>
                 </li>
             </ul>
             <div class="hamburguer">
@@ -35,8 +35,8 @@
 			<a class="flex" href="Login.html"></a>
 		</div>
         <table class="table">
-            <tr> <td>ID:</td> <td><input type="text" id="txtId"></td> </tr>
-            <tr> <td>Nome:</td> <td><input type="text" id="nomeCat"></td> </tr>
+            <tr style="display: none;"> <td>ID:</td> <td><input type="text" id="txtId"></td> </tr>
+            <tr style="display: none;"> <td>Nome:</td> <td><input type="text" id="nomeCat"></td> </tr>
             <tr> <td>Categoria:</td> <td><input type="text" id="txtCategoria"></td> </tr>
             <tr><td></td><td>
                 <input type="button" value="Novo" onclick="novoGame()" id="btnNovo" class="btn btn-outline-secondary">
@@ -77,6 +77,7 @@
 				    paragrafoMensagem.innerHTML =  'Pressione o botão Novo ou selecione uma categoria da lista:';
 				    nomeCat.value = '';
 				    txtCategoria.value = '';
+					txtId.disabled = true;
 				    nomeCat.disabled = true;
 				 	txtCategoria.disabled = true;
 				    btnNovo.disabled = false;
