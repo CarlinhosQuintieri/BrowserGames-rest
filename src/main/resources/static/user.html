@@ -92,6 +92,7 @@
                     hamburguer.classList.remove("active")
                     navMenu.classList.remove("active")
                 }))
+
 				async function listarTodosGames() {
 				fetch('/api/games')
 				    .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
@@ -116,7 +117,105 @@
 			                    '<td>'+ g.imagem + '</td></tr>\n';
 						}          
 						corpoTabela.innerHTML = linhasTabela;
-					}					
+					}	
+                    
+                    function selecionarGame(id, nome, categoria, url, descricao, imagem) {
+					    paragrafoMensagem.innerHTML = 'Altere e salve os dados do jogo, ou então apague o registro do jogo.'
+					    txtId.value = id;
+					    txtNome.value = nome;
+					    txtCategoria.value = categoria;
+					    txtUrl.value= url;
+					    txtDescricao.value = descricao;
+					    txtImagem.value = imagem;
+					    txtId.disabled = true;
+					    txtNome.disabled = false;
+					 	txtCategoria.disabled = false;
+					   	txtUrl.disabled = false;
+					   	txtDescricao.disabled = false;
+					    txtImagem.disabled = false;
+					    btnNovo.disabled = true;
+					    btnSalvar.disabled = false;
+					    btnApagar.disabled = false;
+					    btnCancelar.disabled = false; 
+					}
+					
+					function novoGame() {
+					    paragrafoMensagem.innerHTML = 'Preencha os dados do novo jogo...';
+					    criandoNovoGame = true; 
+					    txtId.value = '';
+					    txtNome.value = '';
+					    txtCategoria.value = '';
+					    txtUrl.value = '';
+					    txtDescricao.value = '';
+					    txtImagem.value = '';
+					    txtId.disabled = true;
+					    txtNome.disabled = false;
+					 	txtCategoria.disabled = false;
+					   	txtUrl.disabled = false;
+					   	txtDescricao.disabled = false;
+					    txtImagem.disabled = false;
+					    btnNovo.disabled = true;
+					    btnSalvar.disabled = false;
+					    btnApagar.disabled = true;
+					    btnCancelar.disabled = false;
+					       
+					}
+					
+					async function salvarGame() {
+					    if (criandoNovoGame) {
+					        fetch('/api/games', {
+					            method: 'POST',
+					            body: JSON.stringify({
+					                'nome': txtNome.value,
+					                'categoria': txtCategoria.value,
+					                'url': txtUrl.value,
+					                'descricao': txtDescricao.value,
+					                'imagem': txtImagem.value
+					               
+					            }),
+					            headers: {'Content-type': 'application/json'}
+					        })
+					        .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
+					        .then(resposta => resposta.json())
+					        .then(json => inicializar())
+					        .catch(function(error) {
+					            paragrafo.innerHTML = "Erro ao criar jogos (código " + error.message + ")";
+					        });  
+					    }
+					    else {
+					        fetch('/api/games/' + txtId.value, {
+					            method: 'PUT',
+					            body: JSON.stringify({
+					                'id': txtId.value,
+					                'nome': txtNome.value,
+					                'categoria': txtCategoria.value,
+					                'url': txtUrl.value,
+					                'descricao': txtDescricao.value,
+					                'imagem': txtImagem.value
+					            }),
+					            headers: {'Content-type': 'application/json'}
+					        })
+					        .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
+					        .then(resposta => resposta.json())
+					        .then(json => inicializar())
+					        .catch(function(error) {
+					            paragrafo.innerHTML = "Erro ao alterar jogos (código " + error.message + ")";
+					        });         
+					    }  
+					}
+					
+					function cancelarEdicao() {
+						inicializar();
+					}
+					
+					async function apagarGame() {
+						fetch('/api/games/' + txtId.value, {method: 'DELETE'} )
+					    .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
+					    .then(resposta => inicializar())
+					    .catch(function(error) {
+					        paragrafo.innerHTML = "Erro ao apagar game (código " + error.message + ")";
+					    });
+					}			
         </script>
 	</body>
 </html>	        
