@@ -57,7 +57,29 @@
 				const btnCancelar = document.querySelector('#btnCancelar');
 				var criandoNovoGame = false;
 
-                //menu hamburguer
+                inicializar();
+
+                function inicializar() {
+                    txtId.value = '';
+                    txtNome.value = '';
+                    txtCategoria.value = '';
+                    txtUrl.value = '';
+                    txtDescricao.value = '';
+                    txtImagem.value = '';
+                    txtId.disabled = true;
+                    txtNome.disabled = true;
+                    txtCategoria.disabled = true;
+                    txtUrl.disabled = true;
+                    txtDescricao.disabled = true;
+                    txtImagem.disabled = true;
+                    btnNovo.disabled = false;
+                    btnSalvar.disabled = true;
+                    btnApagar.disabled = true;
+                    btnCancelar.disabled = true;
+                    criandoNovoGame = false;
+                    listarTodosGames();
+                }
+
                 const hamburguer = document.querySelector(".hamburguer");
                 const navMenu = document.querySelector(".nav-menu");
 
@@ -70,7 +92,6 @@
                     hamburguer.classList.remove("active")
                     navMenu.classList.remove("active")
                 }))
-                // fim do menu hamburguer
 				async function listarTodosGames() {
 				fetch('/api/games')
 				    .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
