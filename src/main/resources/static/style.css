@@ -177,9 +177,6 @@ a{
         left: 0;
     }
 }
-.button input{
-    display: none;
-}
 /*estrelas*/
 .rating{
     display: flex;

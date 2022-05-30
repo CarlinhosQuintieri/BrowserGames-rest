@@ -33,16 +33,16 @@
 
     <body>
 		<div>
-			<h1>Gerenciador Do BrowserGames</h1>
+			<h1>Lista de Jogos</h1>
 		</div>
-        <table class="table">
+        <table class="table" style="display: none;">
             <tr> <td>ID:</td> <td><input type="text" id="txtId"></td> </tr>
             <tr> <td>Nome:</td> <td><input type="text" id="txtNome"></td> </tr>
             <tr> <td>Categoria:</td> <td><input type="text" id="txtCategoria"></td> </tr>
             <tr> <td>Url:</td> <td><input type="text" id="txtUrl"></td> </tr>
             <tr> <td>Descrição:</td> <td><input type="text" id="txtDescricao"></td> </tr>
             <tr> <td>Imagem:</td> <td><input type="text" id="txtImagem"></td> </tr>
-            <tr><td></td><td>
+            <tr style="display: none;"><td></td><td>
                 <input type="button" value="." onclick="novoGame()" id="btnNovo" class="btn btn-outline-secondary">
                 <input type="button" value=".." onclick="salvarGame()" id="btnSalvar" class="btn btn-outline-secondary">
                 <input type="button" value="." onclick="apagarGame()" id="btnApagar" class="btn btn-outline-secondary">
@@ -78,7 +78,6 @@
 				inicializar();
 
 				function inicializar() {
-				    paragrafoMensagem.innerHTML =  'Pressione o botão Novo ou selecione um Game da lista:';
 				    txtId.value = '';
 				    txtNome.value = '';
 				    txtCategoria.value = '';
@@ -91,7 +90,7 @@
 				   	txtUrl.disabled = true;
 				   	txtDescricao.disabled = true;
 				    txtImagem.disabled = true;
-				    btnNovo.disabled = false;
+				    btnNovo.disabled = true;
 				    btnSalvar.disabled = true;
 				    btnApagar.disabled = true;
 				    btnCancelar.disabled = true;
