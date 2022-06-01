@@ -51,17 +51,7 @@
         <p style="font-weight:bold" id="paragrafoMensagem"></p>
 
         <table class="table">    
-            <tr> <th scope="col" >ID</th> <th scope="col" >Nome</th> <th scope="col" >Categoria</th> <th>Url</th> <th scope="col"> Descrição</th>  <th scope="col">Imagem</th>  
-                <th>
-                    <div class="rating">
-                        <input type="radio" name="star" id="star1"><label for="star1"></label>
-                        <input type="radio" name="star" id="star2"><label for="star2"></label>
-                        <input type="radio" name="star" id="star3"><label for="star3"></label>
-                        <input type="radio" name="star" id="star4"><label for="star4"></label>
-                        <input type="radio" name="star" id="star5"><label for="star5"></label>
-    
-                    </div>
-                </th>
+            <tr> <th scope="col" >ID</th> <th scope="col" >Nome</th> <th scope="col" >Categoria</th> <th>Url</th> <th scope="col"> Descrição</th>  <th scope="col">Imagem</th> 
             </tr> 
                                            
             <tbody id="corpoTabelaGames"> </tbody>
@@ -129,7 +119,15 @@
 			                    '<td>' + g.categoria   + '</td>' +
 			                    '<td>' + g.url   + '</td>' +
 			                    '<td>' + g.descricao + '</td>'+
-			                    '<td>'+ g.imagem + '</td></tr>\n';
+			                    '<td>'+ g.imagem + '</td>' +
+                                '<td>'+`<div class="rating">
+                                            <input type="radio" name="star" id="star1"><label for="star1"></label>
+                                            <input type="radio" name="star" id="star2"><label for="star2"></label>
+                                            <input type="radio" name="star" id="star3"><label for="star3"></label>
+                                            <input type="radio" name="star" id="star4"><label for="star4"></label>
+                                            <input type="radio" name="star" id="star5"><label for="star5"></label>
+                                            </div>
+                                            </th>` + '</td></tr>\n';
 						}          
 						corpoTabela.innerHTML = linhasTabela;
 					}
