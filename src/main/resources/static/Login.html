@@ -103,6 +103,7 @@
                 
         }
         async function salvarUsuario() {
+            alert("usuario cadastrado")
             if (criandoNovoUsuario) {
                 fetch('/api/usuarios', {
                     method: 'POST',

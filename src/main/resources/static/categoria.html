@@ -31,16 +31,14 @@
 	
     <body>
 		<div>
-			<h1>Lista de Jogos</h1>
+			<h1>Gerenciador De categorias</h1>
+			<a class="flex" href="Login.html"></a>
 		</div>
-        <table class="table" >
-            <tr> <td>ID:</td> <td><input type="text" id="txtId"></td> </tr>
-            <tr style="display: none;"> <td>Nome:</td> <td><input type="text" id="txtNome"></td> </tr>
-            <tr> <td>Categoria:</td> <td><input type="text" id="catNome"></td> </tr>
-            <tr style="display: none;"> <td>Url:</td> <td><input type="text" id="txtUrl"></td> </tr>
-            <tr style="display: none;"> <td>Descrição:</td> <td><input type="text" id="txtDescricao"></td> </tr>
-            <tr style="display: none;"> <td>Imagem:</td> <td><input type="text" id="txtImagem"></td> </tr>
-			<tr><td></td><td>
+        <table class="table">
+            <tr style="display: none;"> <td>ID:</td> <td><input type="text" id="txtId"></td> </tr>
+            <tr style="display: none;"> <td>Nome:</td> <td><input type="text" id="nomeCat"></td> </tr>
+            <tr> <td>Categoria:</td> <td><input type="text" id="txtCategoria"></td> </tr>
+            <tr><td></td><td>
                 <input type="button" value="Novo" onclick="novoGame()" id="btnNovo" class="btn btn-outline-secondary">
                 <input type="button" value="Salvar" onclick="salvarGame()" id="btnSalvar" class="btn btn-outline-secondary">
                 <input type="button" value="Apagar" onclick="apagarGame()" id="btnApagar" class="btn btn-outline-secondary">
@@ -51,16 +49,20 @@
         <p style="font-weight:bold" id="paragrafoMensagem"></p>
 
         <table class="table">    
-            <tr> <th scope="col" >ID</th> <th scope="col" >Nome</th> <th scope="col" >Categoria</th> <th>Url</th> <th scope="col"> Descrição</th>  <th scope="col">Imagem</th>  </tr>   
+            <tr> <th scope="col" >ID</th> <th scope="col" >Nome</th> <th scope="col" >Categoria</th></tr>   
                                            
-            <tbody id="corpoTabelaCategoria"> </tbody>
+            <tbody id="corpoTabelaGames"> </tbody>
         </table>
         
         
         <script>
-				const corpoTabela = document.querySelector('#corpoTabelaCategoria');
+				const corpoTabela = document.querySelector('#corpoTabelaGames');
 				const paragrafoMensagem = document.querySelector('#paragrafoMensagem');
-				const catNome = document.querySelector('#catNome');
+				const nomeCat = document.querySelector('#nomeCat');
+				const txtCategoria = document.querySelector('#txtCategoria');
+				const txtUrl = document.querySelector('#txtUrl');
+				const txtDescricao = document.querySelector('#txtDescricao');
+				const txtImagem = document.querySelector('#txtImagem');
 				const txtId = document.querySelector('#txtId');
 				const btnNovo = document.querySelector('#btnNovo');
 				const btnSalvar = document.querySelector('#btnSalvar');
@@ -72,20 +74,22 @@
 				inicializar();
 
 				function inicializar() {
-				    txtId.value = '';
-				    catNome.value = '';
-				    txtId.disabled = true;
-				 	catNome.disabled = true;
+				    paragrafoMensagem.innerHTML =  'Pressione o botão Novo ou selecione uma categoria da lista:';
+				    nomeCat.value = '';
+				    txtCategoria.value = '';
+					txtId.disabled = true;
+				    nomeCat.disabled = true;
+				 	txtCategoria.disabled = true;
 				    btnNovo.disabled = false;
 				    btnSalvar.disabled = true;
 				    btnApagar.disabled = true;
 				    btnCancelar.disabled = true;
 				    criandoNovoGame = false;
-				    listarTodasCategorias();
+				    listarTodosGames();
 				}
 
-				async function listarTodasCategorias() {
-				fetch('/api/categorias')
+				async function listarTodosGames() {
+				fetch('/api/games')
 				    .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
 				    .then(resposta => resposta.json())
 				    .then(json => preencherTabela(json))
@@ -93,23 +97,22 @@
 				        paragrafo.innerHTML = "Erro ao listar jogos (código " + error.message + ")"; });
 				}
 
-					function preencherTabela(categorias) {
+					function preencherTabela(games) {
 						var linhasTabela = '';
-						var n = categoria.length;
+						var n = games.length;
 						for (var i=0; i<n; i++) {
-							var g = categoria[i];
+							var g = games[i];
 							linhasTabela += 
-								`<tr><td><a href="javascript:void(0)" onclick="selecionarGame('${g.id}','${g.catNome}'">`
-							             + g.id     + '</a></td>' + 
-			                    '<td>' + g.catNome   + '</td>' 
+								`<tr><td><a href="javascript:void(0)" onclick="selecionarGame('${g.nome}', '${g.categoria})">`
+			                    '<td>' + g.categoria   + '</td>'
 						}          
 						corpoTabela.innerHTML = linhasTabela;
 					}
 					
-					function selecionarGame(id,catNome) {
+					function selecionarGame(categoria) {
 					    paragrafoMensagem.innerHTML = 'Altere e salve os dados da categoria, ou então apague o registro da categoria.'
-					    catNome.value = categoria;
-					 	catNome.disabled = false;
+					    txtCategoria.value = categoria;
+					 	txtCategoria.disabled = false;
 					    btnNovo.disabled = true;
 					    btnSalvar.disabled = false;
 					    btnApagar.disabled = false;
@@ -119,8 +122,8 @@
 					function novoGame() {
 					    paragrafoMensagem.innerHTML = 'Preencha os dados da nova categoria...';
 					    criandoNovoGame = true; 
-					    catNome.value = '';
-					 	catNome.disabled = false;
+					    txtCategoria.value = '';
+					 	txtCategoria.disabled = false;
 					    btnNovo.disabled = true;
 					    btnSalvar.disabled = false;
 					    btnApagar.disabled = true;
@@ -130,10 +133,11 @@
 					
 					async function salvarGame() {
 					    if (criandoNovoGame) {
-					        fetch('/api/categorias', {
+					        fetch('/api/games', {
 					            method: 'POST',
 					            body: JSON.stringify({
-					                'catNome': catNome.value,
+					                'nome': nomeCat.value,
+					                'categoria': txtCategoria.value,
 					               
 					            }),
 					            headers: {'Content-type': 'application/json'}
@@ -146,11 +150,11 @@
 					        });  
 					    }
 					    else {
-					        fetch('/api/categorias/' + txtId.value, {
+					        fetch('/api/games/' + txtId.value, {
 					            method: 'PUT',
 					            body: JSON.stringify({
 					                'id': txtId.value,
-					                'catNome': catNome.value,
+					                'categoria': txtCategoria.value,
 					            }),
 					            headers: {'Content-type': 'application/json'}
 					        })
@@ -168,7 +172,7 @@
 					}
 					
 					async function apagarGame() {
-						fetch('/api/categorias/' + txtId.value, {method: 'DELETE'} )
+						fetch('/api/games/' + txtId.value, {method: 'DELETE'} )
 					    .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
 					    .then(resposta => inicializar())
 					    .catch(function(error) {

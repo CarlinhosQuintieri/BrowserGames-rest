@@ -10,12 +10,12 @@
 
 	<header>
         <nav class="navbar">
-            <a href="" class="nav-branding">Browser Games</a>
+            <a href="Home.html" class="nav-branding">Browser Games</a>
 			<a class="flex" href="Login.html"></a>
 
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="" class="nav-link">Avaliação</a>
+                    <a href="Avaliacao.html" class="nav-link">Avaliação</a>
                 </li>
                 <li class="nav-item">
                     <a href="categoria.html" class="nav-link">Categoria</a>
@@ -36,8 +36,21 @@
 		<div>
 			<h1>Gerenciador Do BrowserGames</h1>
 		</div>
+		<table class="table" style="display: none;">
+            <tr> <td>ID:</td> <td><input type="text" id="txtId"></td> </tr>
+            <tr> <td>Nome:</td> <td><input type="text" id="txtNome"></td> </tr>
+            <tr> <td>Categoria:</td> <td><input type="text" id="txtCategoria"></td> </tr>
+            <tr> <td>Url:</td> <td><input type="text" id="txtUrl"></td> </tr>
+            <tr> <td>Descrição:</td> <td><input type="text" id="txtDescricao"></td> </tr>
+            <tr> <td>Imagem:</td> <td><input type="text" id="txtImagem"></td> </tr>
+            <tr style="display: none;"><td></td><td>
+                <input type="button" value="." onclick="novoGame()" id="btnNovo" class="btn btn-outline-secondary">
+                <input type="button" value=".." onclick="salvarGame()" id="btnSalvar" class="btn btn-outline-secondary">
+                <input type="button" value="." onclick="apagarGame()" id="btnApagar" class="btn btn-outline-secondary">
+                <input type="button" value="." onclick="cancelarEdicao()" id="btnCancelar" class="btn btn-outline-secondary">
+            </td></tr>             
+        </table>
         
-
         <p style="font-weight:bold" id="paragrafoMensagem"></p>
 
         <table class="table">    
@@ -66,7 +79,6 @@
 				
 				
 				inicializar();
-				hamburguer();
 
 				function inicializar() {
 				    txtId.value = '';
@@ -88,7 +100,6 @@
 				    criandoNovoGame = false;
 				    listarTodosGames();
 				}
-				function hamburguer(){
 
 					hamburguer.addEventListener("click",() => {
 						hamburguer.classList.toggle("active")
@@ -99,7 +110,6 @@
 						hamburguer.classList.remove("active")
 						navMenu.classList.remove("active")
 					}))
-				}
 				async function listarTodosGames() {
 				fetch('/api/games')
 				    .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
