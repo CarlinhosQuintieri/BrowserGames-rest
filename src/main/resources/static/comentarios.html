@@ -29,15 +29,17 @@
         </nav>
     </header>
 	
-    <body>
+	<body>
 		<div>
-			<h1>Gerenciador De comentarios</h1>
-			<a class="flex" href="Login.html"></a>
+			<h1>Gerenciador De Comentarios</h1>
 		</div>
-        <table class="table">
+        <table class="table" style="display: none;">
             <tr> <td>ID:</td> <td><input type="text" id="txtId"></td> </tr>
             <tr> <td>Nome:</td> <td><input type="text" id="txtNome"></td> </tr>
-            <tr> <td>Comentario:</td> <td><input type="text" id="txtComentario"></td> </tr>
+            <tr> <td>Categoria:</td> <td><input type="text" id="txtCategoria"></td> </tr>
+            <tr> <td>Url:</td> <td><input type="text" id="txtUrl"></td> </tr>
+            <tr> <td>Descrição:</td> <td><input type="text" id="txtDescricao"></td> </tr>
+            <tr> <td>Imagem:</td> <td><input type="text" id="txtImagem"></td> </tr>
             <tr><td></td><td>
                 <input type="button" value="Novo" onclick="novoGame()" id="btnNovo" class="btn btn-outline-secondary">
                 <input type="button" value="Salvar" onclick="salvarGame()" id="btnSalvar" class="btn btn-outline-secondary">
@@ -49,7 +51,7 @@
         <p style="font-weight:bold" id="paragrafoMensagem"></p>
 
         <table class="table">    
-            <tr> <th scope="col" >ID</th> <th scope="col" >Nome</th> <th scope="col" >Comentario</th></tr>   
+            <tr> <th scope="col" >ID</th> <th scope="col" >Nome</th> <th scope="col" >Categoria</th> <th>Url</th> <th scope="col"> Descrição</th>  <th scope="col">Imagem</th><th>Comentarios</th>  </tr>   
                                            
             <tbody id="corpoTabelaGames"> </tbody>
         </table>
@@ -59,7 +61,7 @@
 				const corpoTabela = document.querySelector('#corpoTabelaGames');
 				const paragrafoMensagem = document.querySelector('#paragrafoMensagem');
 				const txtNome = document.querySelector('#txtNome');
-				const txtComentario = document.querySelector('#txtComentario');
+				const txtCategoria = document.querySelector('#txtCategoria');
 				const txtUrl = document.querySelector('#txtUrl');
 				const txtDescricao = document.querySelector('#txtDescricao');
 				const txtImagem = document.querySelector('#txtImagem');
@@ -74,11 +76,18 @@
 				inicializar();
 
 				function inicializar() {
-				    paragrafoMensagem.innerHTML =  'Pressione o botão Novo ou selecione uma Comentario da lista:';
+				    txtId.value = '';
 				    txtNome.value = '';
-				    txtComentario.value = '';
+				    txtCategoria.value = '';
+				    txtUrl.value = '';
+				    txtDescricao.value = '';
+				    txtImagem.value = '';
+				    txtId.disabled = true;
 				    txtNome.disabled = true;
-				 	txtComentario.disabled = true;
+				 	txtCategoria.disabled = true;
+				   	txtUrl.disabled = true;
+				   	txtDescricao.disabled = true;
+				    txtImagem.disabled = true;
 				    btnNovo.disabled = false;
 				    btnSalvar.disabled = true;
 				    btnApagar.disabled = true;
@@ -102,16 +111,34 @@
 						for (var i=0; i<n; i++) {
 							var g = games[i];
 							linhasTabela += 
-								`<tr><td><a href="javascript:void(0)" onclick="selecionarGame('${g.nome}', '${g.Comentario})">`
-			                    '<td>' + g.Comentario   + '</td>'
+								`<tr><td><a href="javascript:void(0)" onclick="selecionarGame('${g.id}', '${g.nome}', '${g.categoria}', '${g.url}','${g.descricao}','${g.imagem}')">`
+							             + g.id     + '</a></td>' + 
+			                    '<td>' + g.nome   + '</td>' +
+			                    '<td>' + g.categoria   + '</td>' +
+			                    '<td>' + g.url   + '</td>' +
+			                    '<td>' + g.descricao + '</td>'+
+			                    '<td>'+ g.imagem + '</td></tr>'+
+								'<td>'+ `<textarea rows="4" cols="50" name="comment" form="usrform">
+									Insira aqui seu comentario! </textarea>` + 
+								'</td></tr>\n';
 						}          
 						corpoTabela.innerHTML = linhasTabela;
 					}
 					
-					function selecionarGame(Comentario) {
-					    paragrafoMensagem.innerHTML = 'Altere e salve os dados da Comentario, ou então apague o registro da Comentario.'
-					    txtComentario.value = Comentario;
-					 	txtComentario.disabled = false;
+					function selecionarGame(id, nome, categoria, url, descricao, imagem) {
+					    paragrafoMensagem.innerHTML = 'Altere e salve os dados do jogo, ou então apague o registro do jogo.'
+					    txtId.value = id;
+					    txtNome.value = nome;
+					    txtCategoria.value = categoria;
+					    txtUrl.value= url;
+					    txtDescricao.value = descricao;
+					    txtImagem.value = imagem;
+					    txtId.disabled = true;
+					    txtNome.disabled = false;
+					 	txtCategoria.disabled = false;
+					   	txtUrl.disabled = false;
+					   	txtDescricao.disabled = false;
+					    txtImagem.disabled = false;
 					    btnNovo.disabled = true;
 					    btnSalvar.disabled = false;
 					    btnApagar.disabled = false;
@@ -119,10 +146,20 @@
 					}
 					
 					function novoGame() {
-					    paragrafoMensagem.innerHTML = 'Preencha os dados da nova Comentario...';
+					    paragrafoMensagem.innerHTML = 'Preencha os dados do novo jogo...';
 					    criandoNovoGame = true; 
-					    txtComentario.value = '';
-					 	txtComentario.disabled = false;
+					    txtId.value = '';
+					    txtNome.value = '';
+					    txtCategoria.value = '';
+					    txtUrl.value = '';
+					    txtDescricao.value = '';
+					    txtImagem.value = '';
+					    txtId.disabled = true;
+					    txtNome.disabled = false;
+					 	txtCategoria.disabled = false;
+					   	txtUrl.disabled = false;
+					   	txtDescricao.disabled = false;
+					    txtImagem.disabled = false;
 					    btnNovo.disabled = true;
 					    btnSalvar.disabled = false;
 					    btnApagar.disabled = true;
@@ -136,7 +173,10 @@
 					            method: 'POST',
 					            body: JSON.stringify({
 					                'nome': txtNome.value,
-					                'Comentario': txtComentario.value,
+					                'categoria': txtCategoria.value,
+					                'url': txtUrl.value,
+					                'descricao': txtDescricao.value,
+					                'imagem': txtImagem.value
 					               
 					            }),
 					            headers: {'Content-type': 'application/json'}
@@ -145,7 +185,7 @@
 					        .then(resposta => resposta.json())
 					        .then(json => inicializar())
 					        .catch(function(error) {
-					            paragrafo.innerHTML = "Erro ao criar Comentario (código " + error.message + ")";
+					            paragrafo.innerHTML = "Erro ao criar jogos (código " + error.message + ")";
 					        });  
 					    }
 					    else {
@@ -153,7 +193,11 @@
 					            method: 'PUT',
 					            body: JSON.stringify({
 					                'id': txtId.value,
-					                'Comentario': txtComentario.value,
+					                'nome': txtNome.value,
+					                'categoria': txtCategoria.value,
+					                'url': txtUrl.value,
+					                'descricao': txtDescricao.value,
+					                'imagem': txtImagem.value
 					            }),
 					            headers: {'Content-type': 'application/json'}
 					        })
@@ -161,7 +205,7 @@
 					        .then(resposta => resposta.json())
 					        .then(json => inicializar())
 					        .catch(function(error) {
-					            paragrafo.innerHTML = "Erro ao alterar Comentario (código " + error.message + ")";
+					            paragrafo.innerHTML = "Erro ao alterar jogos (código " + error.message + ")";
 					        });         
 					    }  
 					}

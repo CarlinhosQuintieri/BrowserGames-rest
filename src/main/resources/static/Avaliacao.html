@@ -17,7 +17,7 @@
                 <li class="nav-item">
                     <a href="categoria.html" class="nav-link">Categoria</a>
                 </li><li class="nav-item">
-                    <a href="" class="nav-link">Comentarios</a>
+                    <a href="comentarios.html" class="nav-link">Comentarios</a>
                 </li>
             </ul>
             <div class="hamburguer">
@@ -51,8 +51,7 @@
         <p style="font-weight:bold" id="paragrafoMensagem"></p>
 
         <table class="table">    
-            <tr> <th scope="col" >ID</th> <th scope="col" >Nome</th> <th scope="col" >Categoria</th> <th>Url</th> <th scope="col"> Descrição</th>  <th scope="col">Imagem</th> 
-            </tr> 
+            <tr> <th scope="col" >ID</th> <th scope="col" >Nome</th> <th scope="col" >Categoria</th> <th>Url</th> <th scope="col"> Descrição</th>  <th scope="col">Imagem</th> <th>Avaliação</th>  </th></tr> 
                                            
             <tbody id="corpoTabelaGames"> </tbody>
         </table>
@@ -120,13 +119,19 @@
 			                    '<td>' + g.url   + '</td>' +
 			                    '<td>' + g.descricao + '</td>'+
 			                    '<td>'+ g.imagem + '</td>' +
-                                '<td>'+`<div class="rating">
-                                            <input type="radio" name="star" id="star1"><label for="star1"></label>
-                                            <input type="radio" name="star" id="star2"><label for="star2"></label>
-                                            <input type="radio" name="star" id="star3"><label for="star3"></label>
-                                            <input type="radio" name="star" id="star4"><label for="star4"></label>
-                                            <input type="radio" name="star" id="star5"><label for="star5"></label>
-                                            </div>
+                                '<td>'+`
+                                    <span class="star-rating">
+                                        <input type="radio" name="rating" value="1"><i></i>
+                                        <input type="radio" name="rating" value="2"><i></i>
+                                        <input type="radio" name="rating" value="3"><i></i>
+                                        <input type="radio" name="rating" value="4"><i></i>
+                                        <input type="radio" name="rating" value="5"><i></i>
+                                        <input type="radio" name="rating" value="6"><i></i>
+                                        <input type="radio" name="rating" value="7"><i></i>
+                                        <input type="radio" name="rating" value="8"><i></i>
+                                        <input type="radio" name="rating" value="9"><i></i>
+                                        <input type="radio" name="rating" value="10"><i></i>
+                                    </span>
                                             </th>` + '</td></tr>\n';
 						}          
 						corpoTabela.innerHTML = linhasTabela;
