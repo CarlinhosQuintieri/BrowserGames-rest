@@ -175,40 +175,4 @@ a{
         left: 0;
     }
 }
-/*estrelas*/
-.rating{
-    display: flex;
-}
-.rating input{
-    display: none;
-}
-.rating label{
-    display: block;
-    cursor: pointer;
-    width: 50px;
-    background: #ccc;
 
-}
-.rating label:before{
-    position: relative;
-    display: block;
-    content: '\f005';
-    font-family: fontAwesome;
-    font-size: 20px;
-    color: #101010;
-}
-.rating label:after{
-    position: absolute;
-    display: block;
-    content: '\f005';
-    font-family: fontAwesome;
-    font-size: 20px;
-    color: #1f9cff;
-    opacity: 0;
-    transition: 0.5s;
-}
-.rating label:hover:after,
-.raning label:hover ~ label::after,
-.raning input:checked ~ label::after{
-    opacity: 1;
-}
