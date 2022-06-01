@@ -31,9 +31,9 @@
     
     <body>
 		<div>
-			<h1>Gerenciador Do BrowserGames</h1>
+			<h1>Gerenciador Das Avaliações</h1>
 		</div>
-        <table class="table">
+        <table class="table" style="display: none;">
             <tr> <td>ID:</td> <td><input type="text" id="txtId"></td> </tr>
             <tr> <td>Nome:</td> <td><input type="text" id="txtNome"></td> </tr>
             <tr> <td>Categoria:</td> <td><input type="text" id="txtCategoria"></td> </tr>
@@ -76,7 +76,6 @@
 				inicializar();
 
 				function inicializar() {
-				    paragrafoMensagem.innerHTML =  'Pressione o botão Novo ou selecione um Game da lista:';
 				    txtId.value = '';
 				    txtNome.value = '';
 				    txtCategoria.value = '';
