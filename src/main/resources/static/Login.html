@@ -10,29 +10,35 @@
 </head>
 <body>
     <div class="row">
-        <div class="column">
-            <table>
-                <h2 class="text"> Login usuario </h2>
-                <tr> <td>User Name:</td> <td><input type="text" id="txtCategoria"></td> </tr>
-                <tr> <td>Senha:</td> <td><input type="text" id="txtUrl"></td> </tr>
-                <tr><td></td><td>
-                    <a href="user.html">
-                        <input type="button" value="Entrar"  id="btnEntrar" class="btn btn-outline-secondary">
-                    </a>
-                </td></tr>             
-            </table>
-        </div>
-        <div class="column">
-            <table>
-                <h2 class="text"> Login Administrador </h2>
-                <tr> <td>User Name:</td> <td><input type="text" id="txtCategoria"></td> </tr>
-                <tr> <td>Senha:</td> <td><input type="text" id="txtUrl"></td> </tr>
-                <tr><td></td><td>
-                    <a href="Games.html">
-                        <input type="button" value="Entrar"  id="btnEntrar" class="btn btn-outline-secondary">
-                    </a>                </td></tr>             
-            </table>
-        </div>
+        <div class="row">
+            <div class="container login col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4">
+              <br/>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h1 class="title-login text">Login</h1>
+                </div>
+                <div class="panel-body">
+                  <form method="post">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon"> <i
+                            class="glyphicon glyphicon-user" style="width: auto"></i>
+                        </span> <input id="txtUsuario" runat="server" type="text" class="form-control" name="username" placeholder="Usuário" required="" />
+                    </div>
+                </div>
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon"> <i
+                                                  class="glyphicon glyphicon-lock" style="width: auto"></i>
+                                              </span> <input id="txtSenha" runat="server" type="password" class="form-control" name="password" placeholder="Senha" required="" />
+                      </div>
+                      <input class="btn btn-xm btn-block btn-entrar" id="btnEntrar" type="submit" value="Entrar" onclick="Login()" />
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         <div class="column">
             <table>
                 <h2 class="text"> Quero me cadastrar </h2>
@@ -50,81 +56,25 @@
         </div>
     </div>
     <script>
-        const txtNome2 = document.querySelector('#txtNome2');
-        const txtUserName = document.querySelector('#txtUserName');
-        const txtSenha = document.querySelector('#txtSenha');
-        const dateNascimento = document.querySelector('#dateNascimento');
-        const txtEstado = document.querySelector('#txtEstado');
-        const txtPais = document.querySelector('#txtPais');
-        const txtId2 = document.querySelector('#txtId');
-        const btnCadastrar = document.querySelector('#btnCadastrar');
 
-        inicializar();
+        function Login() {
+            var done = 0;
+            var usuario = document.getElementsByName('username')[0].value;
+            usuario = usuario.toLowerCase();
+            var senha = document.getElementsByName('password')[0].value;
+            seha = senha.toLowerCase();
 
-        // inicializa igual em games mas para o cadastrar.
-        function inicializar2() {
-            paragrafoMensagem.innerHTML =  'Pressione o botão Novo Para comecar a cadastrar um novo usuario:';
-            txtId2.value = '';
-            txtNome2.value = '';
-            txtUserName.value = '';
-            txtSenha.value = '';
-            dateNascimento.value = '';
-            txtEstado.value = '';
-            txtPais.value = '';
-            txtId2.disabled = true;
-            txtNome.disabled = true;
-            txtUserName.disabled = true;
-            txtSenha.disabled = true;
-            dateNascimento.disabled = true;
-            txtEstado.disabled = true;
-            txtPais.disabled = true;
-            btnNovo.disabled = false;
-            btnCadastrar.disabled = true;
-            criandoNovoGame = false;
-        }
-        // cria novo usuario, precisa de nova tabela no BD
-        function novoUsuario() {
-            criandoNovoUsuario = true; 
-            txtId2.value = '';
-            txtNome2.value = '';
-            txtUserName.value = '';
-            txtSenha.value = '';
-            dateNascimento.value = '';
-            txtEstado.value = '';
-            txtPais.value = '';
-            txtNome2.disabled = true;
-            txtNome2.disabled = false;
-            txtUserName.disabled = false;
-            txtSenha.disabled = false;
-            dateNascimento.disabled = false;
-            txtEstado.disabled = false;
-            txtPais.disabled = false;
-            btnCadastrar.disabled = false;
-                
-        }
-        async function salvarUsuario() {
-            alert("usuario cadastrado")
-            if (criandoNovoUsuario) {
-                fetch('/api/usuarios', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        'nome': txtNome2.value,
-                        'UserName': txtUserName.value,
-                        'Senha': txtSenha.value,
-                        'data Nascimento': dateNascimento.value,
-                        'estado': txtEstado.value,
-                        'pais': txtPais.value
-                        
-                    }),
-                    headers: {'Content-type': 'application/json'}
-                })
-                .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
-                .then(resposta => resposta.json())
-                .then(json => inicializar2())
-                .catch(function(error) {
-                    paragrafo.innerHTML = "Erro ao criar usuario (código " + error.message + ")";
-                });  
-            }  
+            if (usuario == "admin") {
+                window.location = "Games.html";
+                done = 1;
+            }
+            else if (usuario == "carlosmack") {
+                window.location = "user.html";
+                done = 1;
+            }
+            else if (done == 0) {
+                alert("Dados incorretos, tente novamente");
+            }
         }
 
     </script>
