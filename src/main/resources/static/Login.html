@@ -64,11 +64,11 @@
             var senha = document.getElementsByName('password')[0].value;
             seha = senha.toLowerCase();
 
-            if (usuario == "admin") {
+            if (usuario == "admin" && senha == "admin") {
                 window.location = "Games.html";
                 done = 1;
             }
-            else if (usuario == "carlosmack") {
+            else if (usuario == "carlosmack" && senha == 123456) {
                 window.location = "user.html";
                 done = 1;
             }
@@ -76,7 +76,6 @@
                 alert("Dados incorretos, tente novamente");
             }
         }
-
     </script>
 </body>
 </html>
