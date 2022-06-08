@@ -30,7 +30,7 @@
                       <div class="input-group">
                         <span class="input-group-addon"> <i
                                                   class="glyphicon glyphicon-lock" style="width: auto"></i>
-                                              </span> <input id="txtSenha" runat="server" type="password" class="form-control" name="password" placeholder="Senha" required="" />
+                                              </span> <input id="txSenha" runat="server" type="password" class="form-control" name="password" placeholder="Senha" required="" />
                       </div>
                       <input class="btn btn-xm btn-block btn-entrar" id="btnEntrar" type="submit" value="Entrar" onclick="Login()" />
                     </div>
@@ -68,7 +68,7 @@
                 window.location = "Games.html";
                 done = 1;
             }
-            if (usuario == "carlosmack" && senha == 123456) {
+            else if (usuario == "carlosmack" && senha == 123456) {
                 window.location = "user.html";
                 done = 1;
             }
