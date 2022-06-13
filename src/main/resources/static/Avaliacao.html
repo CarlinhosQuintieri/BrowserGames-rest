@@ -31,13 +31,14 @@
 		<div>
 			<h1>Gerenciador Das Avaliações</h1>
 		</div>
-        <table class="table" style="display: none;">
-            <tr> <td>ID:</td> <td><input type="text" id="txtId"></td> </tr>
-            <tr> <td>Nome:</td> <td><input type="text" id="txtNome"></td> </tr>
-            <tr> <td>Categoria:</td> <td><input type="text" id="txtCategoria"></td> </tr>
-            <tr> <td>Url:</td> <td><input type="text" id="txtUrl"></td> </tr>
-            <tr> <td>Descrição:</td> <td><input type="text" id="txtDescricao"></td> </tr>
-            <tr> <td>Imagem:</td> <td><input type="text" id="txtImagem"></td> </tr>
+        <table class="table"">
+            <tr> <td style="display: none;">ID:</td> <td><input type="text" id="txtId"></td> </tr>
+            <tr> <td style="display: none;">Nome:</td> <td><input type="text" id="txtNome"></td> </tr>
+            <tr> <td style="display: none;">Categoria:</td> <td><input type="text" id="txtCategoria"></td> </tr>
+            <tr> <td style="display: none;">Url:</td> <td><input type="text" id="txtUrl"></td> </tr>
+            <tr> <td style="display: none;">Descrição:</td> <td><input type="text" id="txtDescricao"></td> </tr>
+            <tr> <td style="display: none;">Imagem:</td> <td><input type="text" id="txtImagem"></td> </tr>
+			<tr> <td style="display: none;">Comentarios:</td> <td><input type="text" id="txtComentario"></td> </tr>
             <tr><td></td><td>
                 <input type="button" value="Novo" onclick="novoGame()" id="btnNovo" class="btn btn-outline-secondary">
                 <input type="button" value="Salvar" onclick="salvarGame()" id="btnSalvar" class="btn btn-outline-secondary">
@@ -63,6 +64,7 @@
 				const txtUrl = document.querySelector('#txtUrl');
 				const txtDescricao = document.querySelector('#txtDescricao');
 				const txtImagem = document.querySelector('#txtImagem');
+				const txtComentario = document.querySelector('#txtComentario');
 				const txtId = document.querySelector('#txtId');
 				const btnNovo = document.querySelector('#btnNovo');
 				const btnSalvar = document.querySelector('#btnSalvar');
@@ -86,6 +88,7 @@
 				   	txtUrl.disabled = true;
 				   	txtDescricao.disabled = true;
 				    txtImagem.disabled = true;
+					txtComentario.disabled = true;
 				    btnNovo.disabled = false;
 				    btnSalvar.disabled = true;
 				    btnApagar.disabled = true;
@@ -109,7 +112,7 @@
 						for (var i=0; i<n; i++) {
 							var g = games[i];
 							linhasTabela += 
-								`<tr><td><a href="javascript:void(0)" onclick="selecionarGame('${g.id}', '${g.nome}', '${g.categoria}', '${g.url}','${g.descricao}','${g.imagem}')">`
+								`<tr><td><a href="javascript:void(0)" onclick="selecionarGame('${g.id}', '${g.nome}', '${g.categoria}', '${g.url}','${g.descricao}','${g.imagem}'${g.comentario}')">`
 							             + g.id     + '</a></td>' + 
 			                    '<td>' + g.nome   + '</td>' +
 			                    '<td>' + g.categoria   + '</td>' +
@@ -123,19 +126,14 @@
                                         <input type="radio" name="rating" value="3"><i></i>
                                         <input type="radio" name="rating" value="4"><i></i>
                                         <input type="radio" name="rating" value="5"><i></i>
-                                        <input type="radio" name="rating" value="6"><i></i>
-                                        <input type="radio" name="rating" value="7"><i></i>
-                                        <input type="radio" name="rating" value="8"><i></i>
-                                        <input type="radio" name="rating" value="9"><i></i>
-                                        <input type="radio" name="rating" value="10"><i></i>
-                                    </span>` + '</td>' + '<td>'+ `<textarea rows="4" cols="15" name="comment" form="usrform"></textarea>` + '</tr>\n';
+                                    </span>` + '<td>' + g.comentario + '</td>'+'</tr>\n';
 									
 
 						}          
 						corpoTabela.innerHTML = linhasTabela;
 					}
 					
-					function selecionarGame(id, nome, categoria, url, descricao, imagem) {
+					function selecionarGame(id, nome, categoria, url, descricao, imagem, comentario) {
 					    paragrafoMensagem.innerHTML = 'Altere e salve os dados do jogo, ou então apague o registro do jogo.'
 					    txtId.value = id;
 					    txtNome.value = nome;
@@ -149,6 +147,7 @@
 					   	txtUrl.disabled = false;
 					   	txtDescricao.disabled = false;
 					    txtImagem.disabled = false;
+						txtComentario.disabled = false;
 					    btnNovo.disabled = true;
 					    btnSalvar.disabled = false;
 					    btnApagar.disabled = false;
@@ -170,6 +169,7 @@
 					   	txtUrl.disabled = false;
 					   	txtDescricao.disabled = false;
 					    txtImagem.disabled = false;
+						txtComentario.disabled = false;
 					    btnNovo.disabled = true;
 					    btnSalvar.disabled = false;
 					    btnApagar.disabled = true;
@@ -186,7 +186,8 @@
 					                'categoria': txtCategoria.value,
 					                'url': txtUrl.value,
 					                'descricao': txtDescricao.value,
-					                'imagem': txtImagem.value
+					                'imagem': txtImagem.value,
+									'comentario': txtComentario.value
 					               
 					            }),
 					            headers: {'Content-type': 'application/json'}
@@ -207,7 +208,8 @@
 					                'categoria': txtCategoria.value,
 					                'url': txtUrl.value,
 					                'descricao': txtDescricao.value,
-					                'imagem': txtImagem.value
+					                'imagem': txtImagem.value,
+									'comentario': txtComentario.value
 					            }),
 					            headers: {'Content-type': 'application/json'}
 					        })
