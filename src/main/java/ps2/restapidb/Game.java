@@ -12,7 +12,6 @@ import javax.persistence.*;
 	    private String url;
 	    private String Descricao;
 	    private String imagem;
-		private String comentario;
 	  
 
 	    public Game(){
@@ -55,11 +54,5 @@ import javax.persistence.*;
 		}
 		public void setDescricao(String descricao) {
 			Descricao = descricao;
-		}
-		public String getComentario() {
-			return comentario;
-		}
-		public void setComentario(String Comentario) {
-			Comentario = comentario;
 		}
 	}
