@@ -8,12 +8,16 @@ import javax.persistence.*;
 	    @Id @GeneratedValue
 	    private long id;
 	    private String nome;
-	    private String categoria;
 	    private String url;
 	    private String Descricao;
 	    private String imagem;
-	  
+	    private String comentario;
+	    
 
+	    @ManyToOne(optional=false)
+	    private Avaliacao avaliacao;
+	    
+	    
 	    public Game(){
 	        super();
 	    }
@@ -36,13 +40,7 @@ import javax.persistence.*;
 		public void setUrl(String url) {
 			this.url = url;
 		}
-		public String getCategoria() {
-			return categoria;
-		}
-		public void setCategoria(String categoria) {
-			this.categoria = categoria;
-		}
-		
+
 		public String getImagem() {
 			return imagem;
 		}
@@ -54,5 +52,18 @@ import javax.persistence.*;
 		}
 		public void setDescricao(String descricao) {
 			Descricao = descricao;
+		}
+
+		public Avaliacao getAvaliacao() {
+			return avaliacao;
+		}
+		public void setAvaliacao(Avaliacao avaliacao) {
+			this.avaliacao = avaliacao;
+		}
+		public String getComentario() {
+			return comentario;
+		}
+		public void setComentario(String comentario) {
+			this.comentario = comentario;
 		}
 	}
