@@ -31,4 +31,8 @@ public class Avaliacao {
 	public void setEstrela(long estrela) {
 		this.estrela = estrela;
 	}
+
+
+
+
 }
