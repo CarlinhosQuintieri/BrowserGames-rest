@@ -13,6 +13,7 @@
         <table>    
             <tr> <td>ID:</td> <td><input type="text" id="txtId"></td> </tr>
             <tr> <td>Nome:</td> <td><input type="text" id="txtNome"></td> </tr>
+            <tr> <td>Categoria:</td> <td><input type="text" id="txtCat"></td> </tr>
             <tr> <td>url:</td> <td><input type="text" id="txturl"></td> </tr>
             <tr> <td>Descricao:</td> <td><input type="text" id="txtDescricao"></td> </tr>
             <tr> <td>Imagem:</td> <td><input type="text" id="txtImagem"></td> </tr>  
@@ -29,7 +30,7 @@
 		<p style="font-weight:bold" id="paragrafoMensagem"></p>
 		
         <table>    
-            <tr> <th>ID</th> <th>Nome</th> <th>url</th> <th>Descricao</th> <th>Imagem</th> <th>Comentario</th> <th>Avaliacao</th> </tr>
+            <tr> <th>ID</th> <th>Nome</th><th>Categoria</th><th>url</th> <th>Descricao</th> <th>Imagem</th> <th>Comentario</th> <th>Avaliacao</th> </tr>
             <tbody id="corpoTabelaGames"> </tbody>
         </table>
         
@@ -37,6 +38,7 @@
 	        const corpoTabela = document.querySelector('#corpoTabelaGames');
 	        const paragrafoMensagem = document.querySelector('#paragrafoMensagem');
 	        const txtNome = document.querySelector('#txtNome');
+	        const txtCat = document.querySelector('#txtCat');
 	        const txturl = document.querySelector('#txturl');
 	        const txtDescricao = document.querySelector('#txtDescricao');
 	        const txtImagem = document.querySelector('#txtImagem');
@@ -56,12 +58,14 @@
 	            paragrafoMensagem.innerHTML = 'Pressione o botão Novo ou selecione um Game da lista:'
 	            txtId.value = '';
 	            txtNome.value = '';
+	            txtCat.value = '';
 	            txturl.value = '';
 	            txtDescricao.value = '';
 	            txtImagem.value = '';
 	            txtC.value = '';
 	            txtId.disabled = true;
 	            txtNome.disabled = true;
+	            txtCat.disabled = true;
 	            txturl.disabled = true;
 	            txtDescricao.disabled = true;
 	            txtImagem.disabled = true;
@@ -91,9 +95,10 @@
 	            for (var i = 0; i < n; i++) {
 	                var g = games[i];
 	                linhasTabela += 
-	                	`<tr><td><a href="javascript:void(0)" onclick="selecionarGame('${g.id}','${g.nome}','${g.url}','${g.descricao}','${g.imagem}','${g.comentario}','${g.avaliacao.id}')">` 
+	                	`<tr><td><a href="javascript:void(0)" onclick="selecionarGame('${g.id}','${g.nome}','${g.categoria}','${g.url}','${g.descricao}','${g.imagem}','${g.comentario}','${g.avaliacao.id}')">` 
 	                    + g.id     + '</a></td>' + 
 	                    '<td>' + g.nome   + '</td>' +
+	                    '<td>' + g.categoria   + '</td>' +
 	                    '<td>' + g.url  + '</td>' +
 	                    '<td>' + g.descricao  + '</td>' +
 	                    '<td>' + g.imagem  + '</td>' +
@@ -124,12 +129,13 @@
 
 	        }
 	        
-	        function selecionarGame(id, nome, url, Descricao, imagem,comentario,avaliacaoId) {
+	        function selecionarGame(id, nome,categoria, url, Descricao, imagem,comentario,avaliacaoId) {
 	        	criandoNovoGame = false;
 	        	carregarAvaliacoes();
 	            paragrafoMensagem.innerHTML = 'Altere e salve os dados do game, ou então apague o registro do Game.'
 	            txtId.value = id;
 	            txtNome.value = nome;
+	            txtCat.value = categoria;
 	            txturl.value = url;
 	            txtDescricao.value = Descricao;
 	            txtImagem.value = imagem;
@@ -141,6 +147,7 @@
 	            
 	            txtId.disabled = true;
 	            txtNome.disabled = false;
+	            txtCat.disabled = false;
 	            txturl.disabled = false;
 	            txtDescricao.disabled = false;
 	            txtImagem.disabled = false;
@@ -160,6 +167,7 @@
 	        	
 	        	txtId.value = '';
 	        	txtNome.value = '';
+	        	txtCat.value = '';
 	        	txturl.value = '';
 	        	txtDescricao.value = '';
 	        	txtImagem.value = '';
@@ -168,6 +176,7 @@
 	        	
 	        	txtId.disabled = true;
 		        txtNome.disabled = false;
+		        txtCat.disabled = false;
 		        txturl.disabled = false;
 		        txtDescricao.disabled = false;
 		        txtImagem.disabled = false;
@@ -193,6 +202,7 @@
 	        	const URL = `/api/games`;
 	        	const dadosGame ={
 	        		'nome': txtNome.value,
+	        		'categoria': txtCat.value,
 	        		'url': txturl.value,
 	        		'descricao': txtDescricao.value,
 	        		'imagem': txtImagem.value,
@@ -220,6 +230,7 @@
 	        	const dadosGame = {
 	        			'id': ID,
 	        			'nome': txtNome.value,
+	        			'categoria': txtCat.value,
 		        		'url': txturl.value,
 		        		'descricao': txtDescricao.value,
 		        		'imagem': txtImagem.value,
