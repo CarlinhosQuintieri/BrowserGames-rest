@@ -10,9 +10,8 @@ import javax.persistence.Table;
 public class Avaliacao {
     @Id @GeneratedValue
     private long id;
-    private String nomeGame;
     private long estrela;
-    private String comentario;
+
 
     public Avaliacao(){
         super();
@@ -25,14 +24,6 @@ public class Avaliacao {
         this.id = id;
     }
 
-	public String getNomeGame() {
-		return nomeGame;
-	}
-
-	public void setNomeGame(String nomeGame) {
-		this.nomeGame = nomeGame;
-	}
-
 	public long getEstrela() {
 		return estrela;
 	}
@@ -41,13 +32,7 @@ public class Avaliacao {
 		this.estrela = estrela;
 	}
 
-	public String getComentario() {
-		return comentario;
-	}
 
-	public void setComentario(String comentario) {
-		this.comentario = comentario;
-	}
 
 
 }
