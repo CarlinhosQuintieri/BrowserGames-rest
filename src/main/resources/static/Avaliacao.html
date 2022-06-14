@@ -1,26 +1,21 @@
 <!DOCTYPE html>
-    <html>
+<html>
 
     <head>
-        <title>Games</title>
+    	<title>Games</title>
         <meta charset="UTF-8">
 		<link rel="stylesheet" href="style.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">    </head>
-    
-	<header>
-		<nav class="navbar">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />    </head>
+
+    <header>
+        <nav class="navbar">
             <a href="Home.html" class="nav-branding">Browser Games</a>
-			<a class="flex" href="Login.html"></a>
+            <a class="flex" href="Login.html"></a>
 
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="Avaliacao.html" class="nav-link">Avaliação</a>
-                </li>
-                <li class="nav-item">
                     <a href="categoria.html" class="nav-link">Categoria</a>
-                </li>
-				<li class="nav-item">
-                    <a href="categoria.html" class="nav-link">Relatorios</a>
                 </li>
             </ul>
             <div class="hamburguer">
@@ -30,258 +25,209 @@
 
             </div>
         </nav>
-	</header>
-
+    </header>
+    
     <body>
-        <h1>Avaliações</h1>
-
-        <table class="table">    
+		<div>
+			<h1>Gerenciador Das Avaliações</h1>
+		</div>
+        <table class="table" style="display: none;">
             <tr> <td>ID:</td> <td><input type="text" id="txtId"></td> </tr>
             <tr> <td>Nome:</td> <td><input type="text" id="txtNome"></td> </tr>
-            <tr> <td>url:</td> <td><input type="text" id="txturl"></td> </tr>
-            <tr> <td>Descricao:</td> <td><input type="text" id="txtDescricao"></td> </tr>
-            <tr> <td>Imagem:</td> <td><input type="text" id="txtImagem"></td> </tr>  
-            <tr> <td>Comentario:</td> <td><input type="text" id="txtC"></td> </tr>       
-            <tr> <td>Avaliacao:</td> <td><select id="selectAvaliacao"></select></td> </tr>     
+            <tr> <td>Categoria:</td> <td><input type="text" id="txtCategoria"></td> </tr>
+            <tr> <td>Url:</td> <td><input type="text" id="txtUrl"></td> </tr>
+            <tr> <td>Descrição:</td> <td><input type="text" id="txtDescricao"></td> </tr>
+            <tr> <td>Imagem:</td> <td><input type="text" id="txtImagem"></td> </tr>
             <tr><td></td><td>
                 <input type="button" value="Novo" onclick="novoGame()" id="btnNovo" class="btn btn-outline-secondary">
                 <input type="button" value="Salvar" onclick="salvarGame()" id="btnSalvar" class="btn btn-outline-secondary">
                 <input type="button" value="Apagar" onclick="apagarGame()" id="btnApagar" class="btn btn-outline-secondary">
                 <input type="button" value="Cancelar" onclick="cancelarEdicao()" id="btnCancelar" class="btn btn-outline-secondary">
-            </td></tr>
-        </table> 
-        
-		<p style="font-weight:bold" id="paragrafoMensagem"></p>
-		
+            </td></tr>             
+        </table>
+
+        <p style="font-weight:bold" id="paragrafoMensagem"></p>
+
         <table class="table">    
-            <tr> <th>ID</th> <th>Nome</th> <th>url</th> <th>Descricao</th> <th>Imagem</th> <th>Comentario</th> <th>Avaliacao</th> </tr>
+            <tr> <th scope="col" >ID</th> <th scope="col" >Nome</th> <th scope="col" >Categoria</th> <th>Url</th> <th scope="col"> Descrição</th>  <th scope="col">Imagem</th> <th>Avaliação</th> <th>Comentarios</th></tr> 
+                                           
             <tbody id="corpoTabelaGames"> </tbody>
         </table>
         
-	    <script>
-	        const corpoTabela = document.querySelector('#corpoTabelaGames');
-	        const paragrafoMensagem = document.querySelector('#paragrafoMensagem');
-	        const txtNome = document.querySelector('#txtNome');
-	        const txturl = document.querySelector('#txturl');
-	        const txtDescricao = document.querySelector('#txtDescricao');
-	        const txtImagem = document.querySelector('#txtImagem');
-	        const txtC = document.querySelector('#txtC');
-	        const txtId = document.querySelector('#txtId');
-	        const selectAvaliacao = document.querySelector('#selectAvaliacao');
-	        const btnNovo = document.querySelector('#btnNovo');
-	        const btnSalvar = document.querySelector('#btnSalvar');
-	        const btnApagar = document.querySelector('#btnApagar');
-	        const btnCancelar = document.querySelector('#btnCancelar');
-	        var criandoNovoProfessor = false;
-	        
-	        inicializar();
+        
+        <script>
+				const corpoTabela = document.querySelector('#corpoTabelaGames');
+				const paragrafoMensagem = document.querySelector('#paragrafoMensagem');
+				const txtNome = document.querySelector('#txtNome');
+				const txtCategoria = document.querySelector('#txtCategoria');
+				const txtUrl = document.querySelector('#txtUrl');
+				const txtDescricao = document.querySelector('#txtDescricao');
+				const txtImagem = document.querySelector('#txtImagem');
+				const txtId = document.querySelector('#txtId');
+				const btnNovo = document.querySelector('#btnNovo');
+				const btnSalvar = document.querySelector('#btnSalvar');
+				const btnApagar = document.querySelector('#btnApagar');
+				const btnCancelar = document.querySelector('#btnCancelar');
+				var criandoNovoGame = false;
+				
+				
+				inicializar();
 
-	        function inicializar() {
-	        	criandoNovoProfessor = false;
-	            paragrafoMensagem.innerHTML = 'Pressione o botão Novo ou selecione um Game da lista:'
-	            txtId.value = '';
-	            txtNome.value = '';
-	            txturl.value = '';
-	            txtDescricao.value = '';
-	            txtImagem.value = '';
-	            txtC.value = '';
-	            txtId.disabled = true;
-	            txtNome.disabled = true;
-	            txturl.disabled = true;
-	            txtDescricao.disabled = true;
-	            txtImagem.disabled = true;
-	            txtC.disabled = true;	            
-	            selectAvaliacao.disabled = true;
-	            carregarAvaliacoes();
-	            selectAvaliacao.selectedIndex = -1;
-	            btnNovo.disabled = false;
-	            btnSalvar.disabled = true;
-	            btnApagar.disabled = true;
-	            btnCancelar.disabled = true;
-	            listarTodosGames();            
-	        }
+				function inicializar() {
+				    txtId.value = '';
+				    txtNome.value = '';
+				    txtCategoria.value = '';
+				    txtUrl.value = '';
+				    txtDescricao.value = '';
+				    txtImagem.value = '';
+				    txtId.disabled = true;
+				    txtNome.disabled = true;
+				 	txtCategoria.disabled = true;
+				   	txtUrl.disabled = true;
+				   	txtDescricao.disabled = true;
+				    txtImagem.disabled = true;
+				    btnNovo.disabled = false;
+				    btnSalvar.disabled = true;
+				    btnApagar.disabled = true;
+				    btnCancelar.disabled = true;
+				    criandoNovoGame = false;
+				    listarTodosGames();
+				}
 
-	        async function listarTodosGames() {
-	            const URL = `/api/games`;
-	            fetch(URL)
-	              .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta;}) 
-	              .then(resposta => resposta.json())
-	              .then(jsonResponse => preencherTabela(jsonResponse))
-	              .catch(function(error) { paragrafoMensagem.innerHTML = "Erro ao listar games (código " + error.message + ")";});
-	        }
-	        
-	        function preencherTabela(games) {
-	            var linhasTabela = '';
-	            var n = games.length;
-	            for (var i = 0; i < n; i++) {
-	                var g = games[i];
-	                linhasTabela += 
-	                	`<tr><td><a href="javascript:void(0)" onclick="selecionarGame('${g.id}','${g.nome}','${g.url}','${g.descricao}','${g.imagem}','${g.comentario}','${g.avaliacao.id}')">` 
-	                    + g.id     + '</a></td>' + 
-	                    '<td>' + g.nome   + '</td>' +
-	                    '<td>' + g.url  + '</td>' +
-	                    '<td>' + g.descricao  + '</td>' +
-	                    '<td>' + g.imagem  + '</td>' +
-	                    '<td>' + g.comentario + '</td>' +
-	                    '<td>' + g.avaliacao.estrela + '</td></tr>\n';
-	            }
-	            corpoTabela.innerHTML = linhasTabela;
-	        }
+				async function listarTodosGames() {
+				fetch('/api/games')
+				    .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
+				    .then(resposta => resposta.json())
+				    .then(json => preencherTabela(json))
+				    .catch(function(error) {
+				        paragrafo.innerHTML = "Erro ao listar jogos (código " + error.message + ")"; });
+				}
 
-	        async function carregarAvaliacoes() {
-	        	const URL = `/api/avaliacoes`;
-	            fetch(URL)
-	              .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta;}) 
-	              .then(resposta => resposta.json())
-	              .then(jsonResponse => preencherSelectAvaliacoes(jsonResponse))
-	              .catch(function(error) { paragrafoMensagem.innerHTML = "Erro ao carregar Avalções (código " + error.message + ")";});
-	        }
-	        
-	        function preencherSelectAvaliacoes(avaliacoes) {
-	        	var opcoes = '';
-	        	var n = avaliacoes.length;
-	        	for (var i = 0; i < n; i++) {
-	        			var a = avaliacoes[i];
-	        			opcoes += `<option value="${a.id}">${a.estrela}</option>`
-	        	}
-	        
-				selectAvaliacao.innerHTML = opcoes;
+					function preencherTabela(games) {
+						var linhasTabela = '';
+						var n = games.length;
+						for (var i=0; i<n; i++) {
+							var g = games[i];
+							linhasTabela += 
+								`<tr><td><a href="javascript:void(0)" onclick="selecionarGame('${g.id}', '${g.nome}', '${g.categoria}', '${g.url}','${g.descricao}','${g.imagem}')">`
+							             + g.id     + '</a></td>' + 
+			                    '<td>' + g.nome   + '</td>' +
+			                    '<td>' + g.categoria   + '</td>' +
+			                    '<td>' + g.url   + '</td>' +
+			                    '<td>' + g.descricao + '</td>'+
+			                    '<td>'+ g.imagem + '</td>' +
+                                '<td>'+`
+                                    <span>
+                                        <input type="radio" name="rating" value="1"><i></i>
+                                        <input type="radio" name="rating" value="2"><i></i>
+                                        <input type="radio" name="rating" value="3"><i></i>
+                                        <input type="radio" name="rating" value="4"><i></i>
+                                        <input type="radio" name="rating" value="5"><i></i>
+                                    </span>` + '</td>' + '<td>'+ `<textarea rows="4" cols="15" name="comment" form="usrform"></textarea>` + '</tr>\n';
+									
 
-	        }
-	        
-	        function selecionarGame(id, nome, url, Descricao, imagem,comentario,avaliacaoId) {
-	        	criandoNovoGame = false;
-	        	carregarAvaliacoes();
-	            paragrafoMensagem.innerHTML = 'Altere e salve os dados do game, ou então apague o registro do Game.'
-	            txtId.value = id;
-	            txtNome.value = nome;
-	            txturl.value = url;
-	            txtDescricao.value = Descricao;
-	            txtImagem.value = imagem;
-	            txtC.value =comentario;
-	            selectAvaliacao.value = avaliacaoId;
-	            console.log('avaliacaoId: ', avaliacaoId);
-	          
-	            
-	            
-	            txtId.disabled = true;
-	            txtNome.disabled = false;
-	            txturl.disabled = false;
-	            txtDescricao.disabled = false;
-	            txtImagem.disabled = false;
-	            txtC.disabled = false;
-	            selectAvaliacao.disabled = false;
-	            
-	            btnNovo.disabled = true;
-	            btnSalvar.disabled = false;
-	            btnApagar.disabled = false;
-	            btnCancelar.disabled = false;  
-	        }
-
-	        function novoGame() {
-	        	paragrafoMensagem.innerHTML = 'Preencha os dados do novo game...';
-	        	criandoNovoGame = true;
-	        	carregarAvaliacoes();
-	        	
-	        	txtId.value = '';
-	        	txtNome.value = '';
-	        	txturl.value = '';
-	        	txtDescricao.value = '';
-	        	txtImagem.value = '';
-	        	txtC.value = '';
-	        	selectAvaliacao.selectedIndex = -1;
-	        	
-	        	txtId.disabled = true;
-		        txtNome.disabled = false;
-		        txturl.disabled = false;
-		        txtDescricao.disabled = false;
-		        txtImagem.disabled = false;
-		        txtC.disabled = false;
-		        selectAvaliacao.disabled = false;
-	        	
-	        	btnNovo.disabled = true;
-	        	btnSalvar.disabled = false;
-	        	btnApagar.disabled = true;
-	        	btnCancelar.disabled = false;
-	        }
-	        
-	        function salvarGame() {
-	        	if (criandoNovoGame) {
-	        		criarGame();
-	        	}
-	        	else {
-	        		alterarGame();
-	        	}
-	        }
-	        
-	        async function criarGame() {
-	        	const URL = `/api/games`;
-	        	const dadosGame ={
-	        		'nome': txtNome.value,
-	        		'url': txturl.value,
-	        		'descricao': txtDescricao.value,
-	        		'imagem': txtImagem.value,
-	        		'comentario': txtC.value,
-	        		'avaliacao':{
-	        			'id': selectAvaliacao.value,
-	        			
-	        		}
-	        	};
-	        	const postRequest = {
-	        		method: 'POST',
-	        		body: JSON.stringify(dadosGame),
-	        		headers: { 'Content-type': 'application/json' }
-	        	};
-	        	fetch(URL, postRequest)
-	        		.then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
-	        		.then(resposta => resposta.json())
-	        		.then(jsonResponse => inicializar())
-	        		.catch(function(error) { paragrafoMensagem.innerHTML = 'Erro ao criar novo game (código ' + error.message + ')'; } );
-	        }
-	        
-	        async function alterarGame() {
-	        	const ID = txtId.value;
-	        	const URL = `/api/games/${ID}`;
-	        	const dadosGame = {
-	        			'id': ID,
-	        			'nome': txtNome.value,
-		        		'url': txturl.value,
-		        		'descricao': txtDescricao.value,
-		        		'imagem': txtImagem.value,
-		        		'comentario': txtC.value,
-		        		'avaliacao':{
-		        			'id': selectAvaliacao.value
-		        		}
-	        	};
-	        	const putRequest = {
-	        		method: 'PUT',
-	        		body: JSON.stringify(dadosGame),
-	        		headers: { 'Content-type': 'application/json' }
-	        	};
-	        	fetch(URL, putRequest)
-	        		.then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
-	        		.then(resposta => resposta.json())
-	        		.then(jsonResponse => inicializar())
-	        		.catch(function(error) { paragrafoMensagem.innerHTML = 'Erro ao alterar Game (código ' + error.message + ')'; } );	        	
-	        }
-	        
-	        function cancelarEdicao() {
-	        	inicializar();
-	        }
-	        
-	        async function apagarGame() {
-	        	const ID = txtId.value;
-	        	const URL = `/api/games/${ID}`;
-	        	const deleteRequest = {
-	        		method: 'DELETE'
-	        	};
-	        	fetch(URL, deleteRequest)
-	        		.then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
-	        		.then(resposta => inicializar())
-	        		.catch(function(error) { paragrafoMensagem.innerHTML = 'Erro ao apagar game (código ' + error.message + ')'; } );	        		
-	        }
-	        
-	    </script>    
-    </body>
-    
-</html>
+						}          
+						corpoTabela.innerHTML = linhasTabela;
+					}
+					
+					function selecionarGame(id, nome, categoria, url, descricao, imagem) {
+					    paragrafoMensagem.innerHTML = 'Altere e salve os dados do jogo, ou então apague o registro do jogo.'
+					    txtId.value = id;
+					    txtNome.value = nome;
+					    txtCategoria.value = categoria;
+					    txtUrl.value= url;
+					    txtDescricao.value = descricao;
+					    txtImagem.value = imagem;
+					    txtId.disabled = true;
+					    txtNome.disabled = false;
+					 	txtCategoria.disabled = false;
+					   	txtUrl.disabled = false;
+					   	txtDescricao.disabled = false;
+					    txtImagem.disabled = false;
+					    btnNovo.disabled = true;
+					    btnSalvar.disabled = false;
+					    btnApagar.disabled = false;
+					    btnCancelar.disabled = false; 
+					}
+					
+					function novoGame() {
+					    paragrafoMensagem.innerHTML = 'Preencha os dados do novo jogo...';
+					    criandoNovoGame = true; 
+					    txtId.value = '';
+					    txtNome.value = '';
+					    txtCategoria.value = '';
+					    txtUrl.value = '';
+					    txtDescricao.value = '';
+					    txtImagem.value = '';
+					    txtId.disabled = true;
+					    txtNome.disabled = false;
+					 	txtCategoria.disabled = false;
+					   	txtUrl.disabled = false;
+					   	txtDescricao.disabled = false;
+					    txtImagem.disabled = false;
+					    btnNovo.disabled = true;
+					    btnSalvar.disabled = false;
+					    btnApagar.disabled = true;
+					    btnCancelar.disabled = false;
+					       
+					}
+					
+					async function salvarGame() {
+					    if (criandoNovoGame) {
+					        fetch('/api/games', {
+					            method: 'POST',
+					            body: JSON.stringify({
+					                'nome': txtNome.value,
+					                'categoria': txtCategoria.value,
+					                'url': txtUrl.value,
+					                'descricao': txtDescricao.value,
+					                'imagem': txtImagem.value
+					               
+					            }),
+					            headers: {'Content-type': 'application/json'}
+					        })
+					        .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
+					        .then(resposta => resposta.json())
+					        .then(json => inicializar())
+					        .catch(function(error) {
+					            paragrafo.innerHTML = "Erro ao criar jogos (código " + error.message + ")";
+					        });  
+					    }
+					    else {
+					        fetch('/api/games/' + txtId.value, {
+					            method: 'PUT',
+					            body: JSON.stringify({
+					                'id': txtId.value,
+					                'nome': txtNome.value,
+					                'categoria': txtCategoria.value,
+					                'url': txtUrl.value,
+					                'descricao': txtDescricao.value,
+					                'imagem': txtImagem.value
+					            }),
+					            headers: {'Content-type': 'application/json'}
+					        })
+					        .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
+					        .then(resposta => resposta.json())
+					        .then(json => inicializar())
+					        .catch(function(error) {
+					            paragrafo.innerHTML = "Erro ao alterar jogos (código " + error.message + ")";
+					        });         
+					    }  
+					}
+					
+					function cancelarEdicao() {
+						inicializar();
+					}
+					
+					async function apagarGame() {
+						fetch('/api/games/' + txtId.value, {method: 'DELETE'} )
+					    .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
+					    .then(resposta => inicializar())
+					    .catch(function(error) {
+					        paragrafo.innerHTML = "Erro ao apagar game (código " + error.message + ")";
+					    });
+					}
+					
+        </script>
+	</body>
+</html>	        

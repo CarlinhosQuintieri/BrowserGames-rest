@@ -43,12 +43,17 @@ class GameController {
 
 	@PutMapping("/api/games/{gameId}")
 	Optional<Game> updateGame(@RequestBody Game gameRequest, @PathVariable long gameId) {
-		Optional<Game> opt = gameRepo.findById(gameId);
-			if (opt.isPresent()) {
-				if (gameRequest.getId() == gameId) {
-					gameRepo.save(gameRequest);
-					return opt;
-	
+		Optional<Game> opt = this.getGame(gameId);
+		if (opt.isPresent()) {
+			Game game = opt.get();
+			if (gameRequest.getId() == game.getId()) {
+				game.setNome(gameRequest.getNome());
+				game.setCategoria(gameRequest.getCategoria());
+				game.setUrl(gameRequest.getUrl());
+				game.setDescricao(gameRequest.getDescricao());
+				game.setImagem(gameRequest.getImagem());
+				gameRepo.save(game);
+				return opt;
 			}
 		}
 		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Não foi pssivel alterar os dados do Game de id: " + gameId);	
