@@ -48,9 +48,7 @@ class AvaliacaoController {
 		if (opt.isPresent()) {
 			Avaliacao avaliacao = opt.get();
 			if (avaliacaoRequest.getId() == avaliacao.getId()) {
-				avaliacao.setNomeGame(avaliacaoRequest.getNomeGame());
 				avaliacao.setEstrela(avaliacaoRequest.getEstrela());
-				avaliacao.setComentario(avaliacaoRequest.getComentario());
 				AvaliacaoRepo.save(avaliacao);
 				return opt;
 			}
