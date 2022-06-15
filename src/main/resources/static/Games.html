@@ -36,11 +36,11 @@
         <table>    
             <tr> <td>ID:</td> <td><input type="text" id="txtId"></td> </tr>
             <tr> <td>Nome:</td> <td><input type="text" id="txtNome"></td> </tr>
-			<tr> <td>Categoria:</td> <td><select id="selectCategoria"></select></td> </tr>     
             <tr> <td>url:</td> <td><input type="text" id="txturl"></td> </tr>
             <tr> <td>Descricao:</td> <td><input type="text" id="txtDescricao"></td> </tr>
             <tr> <td>Imagem:</td> <td><input type="text" id="txtImagem"></td> </tr>  
             <tr> <td>Comentario:</td> <td><input type="text" id="txtC"></td> </tr>       
+            <tr> <td>Categoria:</td> <td><select id="selectCategoria"></select></td> </tr>     
             <tr><td></td><td>
                 <input type="button" value="Novo" onclick="novoGame()" id="btnNovo" class="btn btn-outline-secondary">
                 <input type="button" value="Salvar" onclick="salvarGame()" id="btnSalvar" class="btn btn-outline-secondary">
@@ -52,7 +52,7 @@
 		<p style="font-weight:bold" id="paragrafoMensagem"></p>
 		
         <table>    
-            <tr> <th>ID</th> <th>Nome</th> <th>Categoria</th> <th>url</th> <th>Descricao</th> <th>Imagem</th> <th>Comentario</th>  </tr>
+            <tr> <th>ID</th> <th>Nome</th><th>url</th> <th>Descricao</th> <th>Imagem</th> <th>Comentario</th> <th>Categoria</th> </tr>
             <tbody id="corpoTabelaGames"> </tbody>
         </table>
         
@@ -117,11 +117,11 @@
 	                	`<tr><td><a href="javascript:void(0)" onclick="selecionarGame('${g.id}','${g.nome}','${g.url}','${g.descricao}','${g.imagem}','${g.comentario}','${g.categoria.id}')">` 
 	                    + g.id     + '</a></td>' + 
 	                    '<td>' + g.nome   + '</td>' +
-						'<td>' + g.categoria.categoria + '</td>'
 	                    '<td>' + g.url  + '</td>' +
 	                    '<td>' + g.descricao  + '</td>' +
 	                    '<td>' + g.imagem  + '</td>' +
-	                    '<td>' + g.comentario + '</td>' + '</tr>\n';
+	                    '<td>' + g.comentario + '</td>' +
+	                    '<td>' + g.categoria.categoria + '</td></tr>\n';
 	            }
 	            corpoTabela.innerHTML = linhasTabela;
 	        }
