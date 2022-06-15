@@ -53,6 +53,7 @@ class GameController {
 				game.setDescricao(gameRequest.getDescricao());
 				game.setImagem(gameRequest.getImagem());
 				game.setComentario(gameRequest.getComentario());
+				game.setEstrela(gameRequest.getEstrela());
 				gameRepo.save(game);
 				return opt;
 			}

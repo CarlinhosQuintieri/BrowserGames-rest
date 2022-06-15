@@ -13,6 +13,7 @@ import javax.persistence.*;
 	    private String Descricao;
 	    private String imagem;
 		private String comentario;
+		private String estrela;
 	  
 
 	    public Game(){
@@ -62,4 +63,12 @@ import javax.persistence.*;
 		public void setComentario(String comentario) {
 			this.comentario = comentario;
 		}
+		public String getEstrela() {
+			return estrela;
+		}
+	
+		public void setEstrela(String estrela) {
+			this.estrela = estrela;
+		}
+	
 	}

@@ -31,13 +31,16 @@
 		<div>
 			<h1>Gerenciador Das Avaliações</h1>
 		</div>
-        <table class="table" style="display: none;">
+        <table class="table">
             <tr> <td>ID:</td> <td><input type="text" id="txtId"></td> </tr>
             <tr> <td>Nome:</td> <td><input type="text" id="txtNome"></td> </tr>
             <tr> <td>Categoria:</td> <td><input type="text" id="txtCategoria"></td> </tr>
             <tr> <td>Url:</td> <td><input type="text" id="txtUrl"></td> </tr>
             <tr> <td>Descrição:</td> <td><input type="text" id="txtDescricao"></td> </tr>
             <tr> <td>Imagem:</td> <td><input type="text" id="txtImagem"></td> </tr>
+			<tr> <td>Comentario:</td> <td><input type="text" id="txtComentario"></td> </tr>       
+			<tr> <td>Nota:</td> <td><input type="text" id="txtEstrela"></td> </tr> 
+
             <tr><td></td><td>
                 <input type="button" value="Novo" onclick="novoGame()" id="btnNovo" class="btn btn-outline-secondary">
                 <input type="button" value="Salvar" onclick="salvarGame()" id="btnSalvar" class="btn btn-outline-secondary">
@@ -49,7 +52,7 @@
         <p style="font-weight:bold" id="paragrafoMensagem"></p>
 
         <table class="table">    
-            <tr> <th scope="col" >ID</th> <th scope="col" >Nome</th> <th scope="col" >Categoria</th> <th>Url</th> <th scope="col"> Descrição</th>  <th scope="col">Imagem</th> <th>Avaliação</th> <th>Comentarios</th></tr> 
+            <tr> <th scope="col" >ID</th> <th scope="col" >Nome</th> <th scope="col" >Categoria</th> <th>Url</th> <th scope="col"> Descrição</th>  <th scope="col">Imagem</th> <th>Comentario</th> <th>Nota</th></tr> 
                                            
             <tbody id="corpoTabelaGames"> </tbody>
         </table>
@@ -64,6 +67,8 @@
 				const txtDescricao = document.querySelector('#txtDescricao');
 				const txtImagem = document.querySelector('#txtImagem');
 				const txtId = document.querySelector('#txtId');
+				const txtComentario = document.querySelector('#txtComentario');
+				const txtEstrela = document.querySelector('#txtEstrela');
 				const btnNovo = document.querySelector('#btnNovo');
 				const btnSalvar = document.querySelector('#btnSalvar');
 				const btnApagar = document.querySelector('#btnApagar');
@@ -80,12 +85,16 @@
 				    txtUrl.value = '';
 				    txtDescricao.value = '';
 				    txtImagem.value = '';
+					txtComentario.value = '';
+					txtEstrela.value = '';
 				    txtId.disabled = true;
 				    txtNome.disabled = true;
 				 	txtCategoria.disabled = true;
 				   	txtUrl.disabled = true;
 				   	txtDescricao.disabled = true;
 				    txtImagem.disabled = true;
+					txtComentario.disabled = true;
+					txtEstrela.disabled = true;
 				    btnNovo.disabled = false;
 				    btnSalvar.disabled = true;
 				    btnApagar.disabled = true;
@@ -100,7 +109,7 @@
 				    .then(resposta => resposta.json())
 				    .then(json => preencherTabela(json))
 				    .catch(function(error) {
-				        paragrafo.innerHTML = "Erro ao listar jogos (código " + error.message + ")"; });
+				        paragrafoMensagem.innerHTML = "Erro ao listar jogos (código " + error.message + ")"; });
 				}
 
 					function preencherTabela(games) {
@@ -109,28 +118,22 @@
 						for (var i=0; i<n; i++) {
 							var g = games[i];
 							linhasTabela += 
-								`<tr><td><a href="javascript:void(0)" onclick="selecionarGame('${g.id}', '${g.nome}', '${g.categoria}', '${g.url}','${g.descricao}','${g.imagem}')">`
+								`<tr><td><a href="javascript:void(0)" onclick="selecionarGame('${g.id}', '${g.nome}', '${g.categoria}', '${g.url}','${g.descricao}','${g.imagem}','${g.comentario}','${g.estrela}')">`
 							             + g.id     + '</a></td>' + 
 			                    '<td>' + g.nome   + '</td>' +
 			                    '<td>' + g.categoria   + '</td>' +
 			                    '<td>' + g.url   + '</td>' +
 			                    '<td>' + g.descricao + '</td>'+
 			                    '<td>'+ g.imagem + '</td>' +
-                                '<td>'+`
-                                    <span>
-                                        <input type="radio" name="rating" value="1"><i></i>
-                                        <input type="radio" name="rating" value="2"><i></i>
-                                        <input type="radio" name="rating" value="3"><i></i>
-                                        <input type="radio" name="rating" value="4"><i></i>
-                                        <input type="radio" name="rating" value="5"><i></i>
-                                    </span>` + '</td>' + '<td>'+ `<textarea rows="4" cols="15" name="comment" form="usrform"></textarea>` + '</tr>\n';
+                                '<td>'+ g.comentario + '</td>' +
+								'<td>' + g.estrela + '</td>'+ '</tr>\n';
 									
 
 						}          
 						corpoTabela.innerHTML = linhasTabela;
 					}
 					
-					function selecionarGame(id, nome, categoria, url, descricao, imagem) {
+					function selecionarGame(id, nome, categoria, url, descricao, imagem,comentario,estrela) {
 					    paragrafoMensagem.innerHTML = 'Altere e salve os dados do jogo, ou então apague o registro do jogo.'
 					    txtId.value = id;
 					    txtNome.value = nome;
@@ -138,12 +141,16 @@
 					    txtUrl.value= url;
 					    txtDescricao.value = descricao;
 					    txtImagem.value = imagem;
+						txtComentario.value = comentario;
+						txtEstrela.value = estrela;
 					    txtId.disabled = true;
 					    txtNome.disabled = false;
 					 	txtCategoria.disabled = false;
 					   	txtUrl.disabled = false;
 					   	txtDescricao.disabled = false;
 					    txtImagem.disabled = false;
+						txtComentario.disabled = false;
+						txtEstrela.disabled = false;
 					    btnNovo.disabled = true;
 					    btnSalvar.disabled = false;
 					    btnApagar.disabled = false;
@@ -159,12 +166,16 @@
 					    txtUrl.value = '';
 					    txtDescricao.value = '';
 					    txtImagem.value = '';
+						txtComentario.value = '';
+						txtEstrela.value = '';
 					    txtId.disabled = true;
 					    txtNome.disabled = false;
 					 	txtCategoria.disabled = false;
 					   	txtUrl.disabled = false;
 					   	txtDescricao.disabled = false;
 					    txtImagem.disabled = false;
+						txtComentario.disabled = false;
+						txtEstrela.disabled = false;
 					    btnNovo.disabled = true;
 					    btnSalvar.disabled = false;
 					    btnApagar.disabled = true;
@@ -181,7 +192,9 @@
 					                'categoria': txtCategoria.value,
 					                'url': txtUrl.value,
 					                'descricao': txtDescricao.value,
-					                'imagem': txtImagem.value
+					                'imagem': txtImagem.value,
+									'comentario' : txtComentario.value,
+									'estrela': txtEstrela.value
 					               
 					            }),
 					            headers: {'Content-type': 'application/json'}
@@ -190,7 +203,7 @@
 					        .then(resposta => resposta.json())
 					        .then(json => inicializar())
 					        .catch(function(error) {
-					            paragrafo.innerHTML = "Erro ao criar jogos (código " + error.message + ")";
+					            paragrafoMensagem.innerHTML = "Erro ao criar jogos (código " + error.message + ")";
 					        });  
 					    }
 					    else {
@@ -202,7 +215,9 @@
 					                'categoria': txtCategoria.value,
 					                'url': txtUrl.value,
 					                'descricao': txtDescricao.value,
-					                'imagem': txtImagem.value
+					                'imagem': txtImagem.value,
+									'comentario' : txtComentario.value,
+									'estrela': txtEstrela.value
 					            }),
 					            headers: {'Content-type': 'application/json'}
 					        })
@@ -210,7 +225,7 @@
 					        .then(resposta => resposta.json())
 					        .then(json => inicializar())
 					        .catch(function(error) {
-					            paragrafo.innerHTML = "Erro ao alterar jogos (código " + error.message + ")";
+					            paragrafoMensagem.innerHTML = "Erro ao alterar jogos (código " + error.message + ")";
 					        });         
 					    }  
 					}
@@ -224,7 +239,7 @@
 					    .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
 					    .then(resposta => inicializar())
 					    .catch(function(error) {
-					        paragrafo.innerHTML = "Erro ao apagar game (código " + error.message + ")";
+					        paragrafoMensagem.innerHTML = "Erro ao apagar game (código " + error.message + ")";
 					    });
 					}
 					
