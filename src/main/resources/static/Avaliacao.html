@@ -34,7 +34,7 @@
         <table class="table">
             <tr> <td>ID:</td> <td><input type="text" id="txtId"></td> </tr>
             <tr> <td>Nome:</td> <td><input type="text" id="txtNome"></td> </tr>
-            <tr> <td>Categoria:</td> <td><input type="text" id="txtCategoria"></td> </tr>
+            <tr> <td>Categoria:</td> <td><select id="selectCategoria"></select></td> </tr>     
             <tr> <td>Url:</td> <td><input type="text" id="txtUrl"></td> </tr>
             <tr> <td>Descrição:</td> <td><input type="text" id="txtDescricao"></td> </tr>
             <tr> <td>Imagem:</td> <td><input type="text" id="txtImagem"></td> </tr>
@@ -62,7 +62,7 @@
 				const corpoTabela = document.querySelector('#corpoTabelaGames');
 				const paragrafoMensagem = document.querySelector('#paragrafoMensagem');
 				const txtNome = document.querySelector('#txtNome');
-				const txtCategoria = document.querySelector('#txtCategoria');
+				const selectCategoria = document.querySelector('#selectCategoria');
 				const txtUrl = document.querySelector('#txtUrl');
 				const txtDescricao = document.querySelector('#txtDescricao');
 				const txtImagem = document.querySelector('#txtImagem');
@@ -81,7 +81,6 @@
 				function inicializar() {
 				    txtId.value = '';
 				    txtNome.value = '';
-				    txtCategoria.value = '';
 				    txtUrl.value = '';
 				    txtDescricao.value = '';
 				    txtImagem.value = '';
@@ -89,17 +88,19 @@
 					txtEstrela.value = '';
 				    txtId.disabled = true;
 				    txtNome.disabled = true;
-				 	txtCategoria.disabled = true;
 				   	txtUrl.disabled = true;
 				   	txtDescricao.disabled = true;
 				    txtImagem.disabled = true;
 					txtComentario.disabled = true;
 					txtEstrela.disabled = true;
+					selectCategoria.disabled = true;
+	            	selectCategoria.selectedIndex = -1;
 				    btnNovo.disabled = false;
 				    btnSalvar.disabled = true;
 				    btnApagar.disabled = true;
 				    btnCancelar.disabled = true;
 				    criandoNovoGame = false;
+					carregarCategorias();
 				    listarTodosGames();
 				}
 
@@ -118,10 +119,10 @@
 						for (var i=0; i<n; i++) {
 							var g = games[i];
 							linhasTabela += 
-								`<tr><td><a href="javascript:void(0)" onclick="selecionarGame('${g.id}', '${g.nome}', '${g.categoria}', '${g.url}','${g.descricao}','${g.imagem}','${g.comentario}','${g.estrela}')">`
+								`<tr><td><a href="javascript:void(0)" onclick="selecionarGame('${g.id}', '${g.nome}', '${g.url}','${g.descricao}','${g.imagem}','${g.comentario}','${g.estrela}','${g.categoria.id}')">`
 							             + g.id     + '</a></td>' + 
 			                    '<td>' + g.nome   + '</td>' +
-			                    '<td>' + g.categoria   + '</td>' +
+								'<td>' + g.categoria.categoria + '</td>'+ 
 			                    '<td>' + g.url   + '</td>' +
 			                    '<td>' + g.descricao + '</td>'+
 			                    '<td>'+ g.imagem + '</td>' +
@@ -132,12 +133,35 @@
 						}          
 						corpoTabela.innerHTML = linhasTabela;
 					}
+
+					async function carregarCategorias() {
+						const URL = `/api/categorias`;
+						fetch(URL)
+							.then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta;}) 
+							.then(resposta => resposta.json())
+							.then(jsonResponse => preencherSelectCategorias(jsonResponse))
+							.catch(function(error) { paragrafoMensagem.innerHTML = "Erro ao carregar Categorias (código " + error.message + ")";});
+	        		}
+	        
+				function preencherSelectCategorias(categorias) {
+					var opcoes = '';
+					var n = categorias.length;
+					for (var i = 0; i < n; i++) {
+							var c = categorias[i];
+							opcoes += `<option value="${c.id}">${c.categoria}</option>`
+					}
+				
+					selectCategoria.innerHTML = opcoes;
+
+				}
 					
-					function selecionarGame(id, nome, categoria, url, descricao, imagem,comentario,estrela) {
-					    paragrafoMensagem.innerHTML = 'Altere e salve os dados do jogo, ou então apague o registro do jogo.'
+					function selecionarGame(id, nome, categoriaId, url, descricao, imagem,comentario,estrela) {
+						criandoNovoGame = false;
+						carregarCategorias();
+						paragrafoMensagem.innerHTML = 'Altere e salve os dados do jogo, ou então apague o registro do jogo.'
 					    txtId.value = id;
 					    txtNome.value = nome;
-					    txtCategoria.value = categoria;
+						selectCategoria.value = categoriaId;
 					    txtUrl.value= url;
 					    txtDescricao.value = descricao;
 					    txtImagem.value = imagem;
@@ -145,7 +169,7 @@
 						txtEstrela.value = estrela;
 					    txtId.disabled = true;
 					    txtNome.disabled = false;
-					 	txtCategoria.disabled = false;
+						selectCategoria.disabled = true;
 					   	txtUrl.disabled = false;
 					   	txtDescricao.disabled = false;
 					    txtImagem.disabled = false;
@@ -160,9 +184,10 @@
 					function novoGame() {
 					    paragrafoMensagem.innerHTML = 'Preencha os dados do novo jogo...';
 					    criandoNovoGame = true; 
+						carregarCategorias();
 					    txtId.value = '';
 					    txtNome.value = '';
-					    txtCategoria.value = '';
+						selectCategoria.selectedIndex = -1;
 					    txtUrl.value = '';
 					    txtDescricao.value = '';
 					    txtImagem.value = '';
@@ -170,7 +195,7 @@
 						txtEstrela.value = '';
 					    txtId.disabled = true;
 					    txtNome.disabled = false;
-					 	txtCategoria.disabled = false;
+						selectCategoria.disabled = true;
 					   	txtUrl.disabled = false;
 					   	txtDescricao.disabled = false;
 					    txtImagem.disabled = false;
@@ -189,12 +214,14 @@
 					            method: 'POST',
 					            body: JSON.stringify({
 					                'nome': txtNome.value,
-					                'categoria': txtCategoria.value,
 					                'url': txtUrl.value,
 					                'descricao': txtDescricao.value,
 					                'imagem': txtImagem.value,
 									'comentario' : txtComentario.value,
-									'estrela': txtEstrela.value
+									'estrela': txtEstrela.value,
+									'categoria':{
+	        							'id': selectCategoria.value
+	        						}
 					               
 					            }),
 					            headers: {'Content-type': 'application/json'}
@@ -212,12 +239,14 @@
 					            body: JSON.stringify({
 					                'id': txtId.value,
 					                'nome': txtNome.value,
-					                'categoria': txtCategoria.value,
 					                'url': txtUrl.value,
 					                'descricao': txtDescricao.value,
 					                'imagem': txtImagem.value,
 									'comentario' : txtComentario.value,
-									'estrela': txtEstrela.value
+									'estrela': txtEstrela.value,
+									'categoria':{
+										'id': selectCategoria.value
+									}
 					            }),
 					            headers: {'Content-type': 'application/json'}
 					        })

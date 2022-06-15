@@ -2,17 +2,16 @@
 <html>
 
     <head>
-    	<title>Admin</title>
+    	<title>home</title>
         <meta charset="UTF-8">
 		<link rel="stylesheet" href="style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    </head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />    </head>
 
-	<header>
+    <header>
         <nav class="navbar">
             <a href="Home.html" class="nav-branding">Browser Games</a>
-			<a class="flex" href="Login.html"></a>
-
+            <a class="flex" href="Login.html"></a>
             <div class="hamburguer">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -22,29 +21,32 @@
         </nav>
     </header>
     
-	<body>
+    <body>
 		<div>
-			<h1>Gerenciador Do BrowserGames</h1>
+			<h1>Pagina inicial</h1>
 		</div>
-		<table class="table" style="display: none;">
+        <table class="table" style="display:none ;">
             <tr> <td>ID:</td> <td><input type="text" id="txtId"></td> </tr>
             <tr> <td>Nome:</td> <td><input type="text" id="txtNome"></td> </tr>
-            <tr> <td>Categoria:</td> <td><input type="text" id="txtCategoria"></td> </tr>
+            <tr> <td>Categoria:</td> <td><select id="selectCategoria"></select></td> </tr>     
             <tr> <td>Url:</td> <td><input type="text" id="txtUrl"></td> </tr>
             <tr> <td>Descrição:</td> <td><input type="text" id="txtDescricao"></td> </tr>
             <tr> <td>Imagem:</td> <td><input type="text" id="txtImagem"></td> </tr>
-            <tr style="display: none;"><td></td><td>
-                <input type="button" value="." onclick="novoGame()" id="btnNovo" class="btn btn-outline-secondary">
-                <input type="button" value=".." onclick="salvarGame()" id="btnSalvar" class="btn btn-outline-secondary">
-                <input type="button" value="." onclick="apagarGame()" id="btnApagar" class="btn btn-outline-secondary">
-                <input type="button" value="." onclick="cancelarEdicao()" id="btnCancelar" class="btn btn-outline-secondary">
+			<tr> <td>Comentario:</td> <td><input type="text" id="txtComentario"></td> </tr>       
+			<tr> <td>Nota:</td> <td><input type="text" id="txtEstrela"></td> </tr> 
+
+            <tr><td></td><td>
+                <input type="button" value="Novo" onclick="novoGame()" id="btnNovo" class="btn btn-outline-secondary">
+                <input type="button" value="Salvar" onclick="salvarGame()" id="btnSalvar" class="btn btn-outline-secondary">
+                <input type="button" value="Apagar" onclick="apagarGame()" id="btnApagar" class="btn btn-outline-secondary">
+                <input type="button" value="Cancelar" onclick="cancelarEdicao()" id="btnCancelar" class="btn btn-outline-secondary">
             </td></tr>             
         </table>
-        
+
         <p style="font-weight:bold" id="paragrafoMensagem"></p>
 
         <table class="table">    
-            <tr> <th scope="col" >ID</th> <th scope="col" >Nome</th> <th scope="col" >Categoria</th> <th>Url</th> <th scope="col"> Descrição</th>  <th scope="col">Imagem</th>  </tr>   
+            <tr> <th scope="col" >ID</th> <th scope="col" >Nome</th> <th scope="col" >Categoria</th> <th>Url</th> <th scope="col"> Descrição</th>  <th scope="col">Imagem</th> <th>Comentario</th> <th>Nota</th></tr> 
                                            
             <tbody id="corpoTabelaGames"> </tbody>
         </table>
@@ -54,17 +56,17 @@
 				const corpoTabela = document.querySelector('#corpoTabelaGames');
 				const paragrafoMensagem = document.querySelector('#paragrafoMensagem');
 				const txtNome = document.querySelector('#txtNome');
-				const txtCategoria = document.querySelector('#txtCategoria');
+				const selectCategoria = document.querySelector('#selectCategoria');
 				const txtUrl = document.querySelector('#txtUrl');
 				const txtDescricao = document.querySelector('#txtDescricao');
 				const txtImagem = document.querySelector('#txtImagem');
 				const txtId = document.querySelector('#txtId');
+				const txtComentario = document.querySelector('#txtComentario');
+				const txtEstrela = document.querySelector('#txtEstrela');
 				const btnNovo = document.querySelector('#btnNovo');
 				const btnSalvar = document.querySelector('#btnSalvar');
 				const btnApagar = document.querySelector('#btnApagar');
 				const btnCancelar = document.querySelector('#btnCancelar');
-				const hamburguer = document.querySelector(".hamburguer");
-                const navMenu = document.querySelector(".nav-menu");
 				var criandoNovoGame = false;
 				
 				
@@ -73,41 +75,37 @@
 				function inicializar() {
 				    txtId.value = '';
 				    txtNome.value = '';
-				    txtCategoria.value = '';
 				    txtUrl.value = '';
 				    txtDescricao.value = '';
 				    txtImagem.value = '';
+					txtComentario.value = '';
+					txtEstrela.value = '';
 				    txtId.disabled = true;
 				    txtNome.disabled = true;
-				 	txtCategoria.disabled = true;
 				   	txtUrl.disabled = true;
 				   	txtDescricao.disabled = true;
 				    txtImagem.disabled = true;
+					txtComentario.disabled = true;
+					txtEstrela.disabled = true;
+					selectCategoria.disabled = true;
+	            	selectCategoria.selectedIndex = -1;
 				    btnNovo.disabled = false;
 				    btnSalvar.disabled = true;
 				    btnApagar.disabled = true;
 				    btnCancelar.disabled = true;
 				    criandoNovoGame = false;
+					carregarCategorias();
 				    listarTodosGames();
 				}
 
-					hamburguer.addEventListener("click",() => {
-						hamburguer.classList.toggle("active")
-						navMenu.classList.toggle("active")
-					})
-					
-					document.querySelectorAll(".nav-link").forEach(n => n.addEventListener("click",() =>{
-						hamburguer.classList.remove("active")
-						navMenu.classList.remove("active")
-					}))
 				async function listarTodosGames() {
 				fetch('/api/games')
 				    .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
 				    .then(resposta => resposta.json())
 				    .then(json => preencherTabela(json))
 				    .catch(function(error) {
-				        paragrafo.innerHTML = "Erro ao listar jogos (código " + error.message + ")"; });
-					}	
+				        paragrafoMensagem.innerHTML = "Erro ao listar jogos (código " + error.message + ")"; });
+				}
 
 					function preencherTabela(games) {
 						var linhasTabela = '';
@@ -115,17 +113,158 @@
 						for (var i=0; i<n; i++) {
 							var g = games[i];
 							linhasTabela += 
-								`<tr><td><a href="javascript:void(0)" onclick="selecionarGame('${g.id}', '${g.nome}', '${g.categoria}', '${g.url}','${g.descricao}','${g.imagem}')">`
+								`<tr><td><a href="javascript:void(0)" onclick="selecionarGame('${g.id}', '${g.nome}', '${g.url}','${g.descricao}','${g.imagem}','${g.comentario}','${g.estrela}','${g.categoria.id}')">`
 							             + g.id     + '</a></td>' + 
 			                    '<td>' + g.nome   + '</td>' +
-			                    '<td>' + g.categoria   + '</td>' +
+								'<td>' + g.categoria.categoria + '</td>'+ 
 			                    '<td>' + g.url   + '</td>' +
 			                    '<td>' + g.descricao + '</td>'+
-			                    '<td>'+ g.imagem + '</td></tr>\n';
+			                    '<td>'+ g.imagem + '</td>' +
+                                '<td>'+ g.comentario + '</td>' +
+								'<td>' + g.estrela + '</td>'+ '</tr>\n';
+									
+
 						}          
 						corpoTabela.innerHTML = linhasTabela;
 					}
+
+					async function carregarCategorias() {
+						const URL = `/api/categorias`;
+						fetch(URL)
+							.then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta;}) 
+							.then(resposta => resposta.json())
+							.then(jsonResponse => preencherSelectCategorias(jsonResponse))
+							.catch(function(error) { paragrafoMensagem.innerHTML = "Erro ao carregar Categorias (código " + error.message + ")";});
+	        		}
+	        
+				function preencherSelectCategorias(categorias) {
+					var opcoes = '';
+					var n = categorias.length;
+					for (var i = 0; i < n; i++) {
+							var c = categorias[i];
+							opcoes += `<option value="${c.id}">${c.categoria}</option>`
+					}
 				
+					selectCategoria.innerHTML = opcoes;
+
+				}
+					
+					function selecionarGame(id, nome, categoriaId, url, descricao, imagem,comentario,estrela) {
+						criandoNovoGame = false;
+						carregarCategorias();
+						paragrafoMensagem.innerHTML = 'Altere e salve os dados do jogo, ou então apague o registro do jogo.'
+					    txtId.value = id;
+					    txtNome.value = nome;
+						selectCategoria.value = categoriaId;
+					    txtUrl.value= url;
+					    txtDescricao.value = descricao;
+					    txtImagem.value = imagem;
+						txtComentario.value = comentario;
+						txtEstrela.value = estrela;
+					    txtId.disabled = true;
+					    txtNome.disabled = false;
+						selectCategoria.disabled = true;
+					   	txtUrl.disabled = false;
+					   	txtDescricao.disabled = false;
+					    txtImagem.disabled = false;
+						txtComentario.disabled = false;
+						txtEstrela.disabled = false;
+					    btnNovo.disabled = true;
+					    btnSalvar.disabled = false;
+					    btnApagar.disabled = false;
+					    btnCancelar.disabled = false; 
+					}
+					
+					function novoGame() {
+					    paragrafoMensagem.innerHTML = 'Preencha os dados do novo jogo...';
+					    criandoNovoGame = true; 
+						carregarCategorias();
+					    txtId.value = '';
+					    txtNome.value = '';
+						selectCategoria.selectedIndex = -1;
+					    txtUrl.value = '';
+					    txtDescricao.value = '';
+					    txtImagem.value = '';
+						txtComentario.value = '';
+						txtEstrela.value = '';
+					    txtId.disabled = true;
+					    txtNome.disabled = false;
+						selectCategoria.disabled = true;
+					   	txtUrl.disabled = false;
+					   	txtDescricao.disabled = false;
+					    txtImagem.disabled = false;
+						txtComentario.disabled = false;
+						txtEstrela.disabled = false;
+					    btnNovo.disabled = true;
+					    btnSalvar.disabled = false;
+					    btnApagar.disabled = true;
+					    btnCancelar.disabled = false;
+					       
+					}
+					
+					async function salvarGame() {
+					    if (criandoNovoGame) {
+					        fetch('/api/games', {
+					            method: 'POST',
+					            body: JSON.stringify({
+					                'nome': txtNome.value,
+					                'url': txtUrl.value,
+					                'descricao': txtDescricao.value,
+					                'imagem': txtImagem.value,
+									'comentario' : txtComentario.value,
+									'estrela': txtEstrela.value,
+									'categoria':{
+	        							'id': selectCategoria.value
+	        						}
+					               
+					            }),
+					            headers: {'Content-type': 'application/json'}
+					        })
+					        .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
+					        .then(resposta => resposta.json())
+					        .then(json => inicializar())
+					        .catch(function(error) {
+					            paragrafoMensagem.innerHTML = "Erro ao criar jogos (código " + error.message + ")";
+					        });  
+					    }
+					    else {
+					        fetch('/api/games/' + txtId.value, {
+					            method: 'PUT',
+					            body: JSON.stringify({
+					                'id': txtId.value,
+					                'nome': txtNome.value,
+					                'url': txtUrl.value,
+					                'descricao': txtDescricao.value,
+					                'imagem': txtImagem.value,
+									'comentario' : txtComentario.value,
+									'estrela': txtEstrela.value,
+									'categoria':{
+										'id': selectCategoria.value
+									}
+					            }),
+					            headers: {'Content-type': 'application/json'}
+					        })
+					        .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
+					        .then(resposta => resposta.json())
+					        .then(json => inicializar())
+					        .catch(function(error) {
+					            paragrafoMensagem.innerHTML = "Erro ao alterar jogos (código " + error.message + ")";
+					        });         
+					    }  
+					}
+					
+					function cancelarEdicao() {
+						inicializar();
+					}
+					
+					async function apagarGame() {
+						fetch('/api/games/' + txtId.value, {method: 'DELETE'} )
+					    .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
+					    .then(resposta => inicializar())
+					    .catch(function(error) {
+					        paragrafoMensagem.innerHTML = "Erro ao apagar game (código " + error.message + ")";
+					    });
+					}
 					
         </script>
 	</body>
