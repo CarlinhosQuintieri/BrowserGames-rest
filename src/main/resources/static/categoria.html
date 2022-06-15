@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+    <html>
+
     <head>
-    	<title>Categoria</title>
+        <title>Categorias</title>
         <meta charset="UTF-8">
 		<link rel="stylesheet" href="style.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    </head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">    
+	</head>
     
 	<header>
         <nav class="navbar">
@@ -16,7 +17,12 @@
                 <li class="nav-item">
                     <a href="Avaliacao.html" class="nav-link">Avaliação</a>
                 </li>
-
+                <li class="nav-item">
+                    <a href="categoria.html" class="nav-link">Categoria</a>
+                </li>
+				<li class="nav-item">
+                    <a href="categoria.html" class="nav-link">Relatorios</a>
+                </li>
             </ul>
             <div class="hamburguer">
                 <span class="bar"></span>
@@ -26,199 +32,167 @@
             </div>
         </nav>
     </header>
-	
+
     <body>
-		<div>
-			<h1>Gerenciador De categorias</h1>
-			<a class="flex" href="Login.html"></a>
-		</div>
-        <table class="table">
-            <tr style="display: none;"> <td>ID:</td> <td><input type="text" id="txtId"></td> </tr>
-            <tr style="display: none;"> <td>Nome:</td> <td><input type="text" id="txtNome"></td> </tr>
-            <tr> <td>Categoria:</td> <td><input type="text" id="txtCategoria"></td> </tr>
-            <tr style="display: none;"> <td>Url:</td> <td><input type="text" id="txtUrl"></td> </tr>
-            <tr style="display: none;"> <td>Descrição:</td> <td><input type="text" id="txtDescricao"></td> </tr>
-            <tr style="display: none;"> <td>Imagem:</td> <td><input type="text" id="txtImagem"></td> </tr>
+        <h1>Gerenciamento de Categorias</h1>
+
+        <table>    
+            <tr> <td>ID:</td> <td><input type="text" id="txtId"></td> </tr>
+            <tr> <td>Categoria:</td> <td><input type="text" id="txtCat"></td> </tr>
             <tr><td></td><td>
-                <input type="button" value="Novo" onclick="novoGame()" id="btnNovo" class="btn btn-outline-secondary">
-                <input type="button" value="Salvar" onclick="salvarGame()" id="btnSalvar" class="btn btn-outline-secondary">
-                <input type="button" value="Apagar" onclick="apagarGame()" id="btnApagar" class="btn btn-outline-secondary">
+                <input type="button" value="Novo" onclick="novoCategoria()" id="btnNovo" class="btn btn-outline-secondary">
+                <input type="button" value="Salvar" onclick="salvarCategoria()" id="btnSalvar" class="btn btn-outline-secondary">
+                <input type="button" value="Apagar" onclick="apagarCategoria()" id="btnApagar" class="btn btn-outline-secondary">
                 <input type="button" value="Cancelar" onclick="cancelarEdicao()" id="btnCancelar" class="btn btn-outline-secondary">
-            </td></tr>             
-        </table>
-
-        <p style="font-weight:bold" id="paragrafoMensagem"></p>
-
-        <table class="table">    
-            <tr> <th scope="col" >ID</th> <th scope="col" >Nome</th> <th scope="col" >Categoria</th></tr>   
-                                           
+            </td></tr>
+        </table> 
+        
+		<p style="font-weight:bold" id="paragrafoMensagem"></p>
+		
+        <table>    
+            <tr> <th>ID</th><th>Categoria</th> </tr>
             <tbody id="corpoTabelaGames"> </tbody>
         </table>
         
-        
-        <script>
-				const corpoTabela = document.querySelector('#corpoTabelaGames');
-				const paragrafoMensagem = document.querySelector('#paragrafoMensagem');
-				const txtNome = document.querySelector('#txtNome');
-				const txtCategoria = document.querySelector('#txtCategoria');
-				const txtUrl = document.querySelector('#txtUrl');
-				const txtDescricao = document.querySelector('#txtDescricao');
-				const txtImagem = document.querySelector('#txtImagem');
-				const txtId = document.querySelector('#txtId');
-				const btnNovo = document.querySelector('#btnNovo');
-				const btnSalvar = document.querySelector('#btnSalvar');
-				const btnApagar = document.querySelector('#btnApagar');
-				const btnCancelar = document.querySelector('#btnCancelar');
-				var criandoNovoGame = false;
-				
-				
-				inicializar();
+	    <script>
+	        const corpoTabela = document.querySelector('#corpoTabelaGames');
+	        const paragrafoMensagem = document.querySelector('#paragrafoMensagem');
+	        const txtC = document.querySelector('#txtCat');
+	        const txtId = document.querySelector('#txtId');
+	        const btnNovo = document.querySelector('#btnNovo');
+	        const btnSalvar = document.querySelector('#btnSalvar');
+	        const btnApagar = document.querySelector('#btnApagar');
+	        const btnCancelar = document.querySelector('#btnCancelar');
+	        var criandoNovoCat= false;
+	        
+	        inicializar();
 
-				function inicializar() {
-				    paragrafoMensagem.innerHTML =  'Pressione o botão Novo ou selecione um Game da lista:';
-				    txtId.value = '';
-				    txtNome.value = '';
-				    txtCategoria.value = '';
-				    txtUrl.value = '';
-				    txtDescricao.value = '';
-				    txtImagem.value = '';
-				    txtId.disabled = true;
-				    txtNome.disabled = true;
-				 	txtCategoria.disabled = true;
-				   	txtUrl.disabled = true;
-				   	txtDescricao.disabled = true;
-				    txtImagem.disabled = true;
-				    btnNovo.disabled = false;
-				    btnSalvar.disabled = true;
-				    btnApagar.disabled = true;
-				    btnCancelar.disabled = true;
-				    criandoNovoGame = false;
-				    listarTodosGames();
-				}
+	        function inicializar() {
+	        	criandoNovoCat = false;
+	            paragrafoMensagem.innerHTML = 'Pressione o botão Novo ou selecione uma Categoria da lista:'
+	            txtId.value = '';
+	            txtCat.value = '';
+	            txtId.disabled = true;
+	            txtCat.disabled = true;	            
+	            btnNovo.disabled = false;
+	            btnSalvar.disabled = true;
+	            btnApagar.disabled = true;
+	            btnCancelar.disabled = true;
+	            listarTodosCategorias() ;            
+	        }
 
-				async function listarTodosGames() {
-				fetch('/api/games')
-				    .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
-				    .then(resposta => resposta.json())
-				    .then(json => preencherTabela(json))
-				    .catch(function(error) {
-				        paragrafo.innerHTML = "Erro ao listar jogos (código " + error.message + ")"; });
-				}
+	        async function listarTodosCategorias() {
+	            const URL = `/api/categorias`;
+	            fetch(URL)
+	              .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta;}) 
+	              .then(resposta => resposta.json())
+	              .then(jsonResponse => preencherTabela(jsonResponse))
+	              .catch(function(error) { paragrafoMensagem.innerHTML = "Erro ao listar Categorias (código " + error.message + ")";});
+	        }
+	        function preencherTabela(categorias) {
+	            var linhasTabela = '';
+	            var n = categorias.length;
+	            for (var i = 0; i < n; i++) {
+	                var c = categorias[i];
+	                linhasTabela += 
+	                	`<tr><td><a href="javascript:void(0)" onclick="selecionarCategoria('${c.id}','${c.categoria }')">` 
+	                    + c.id     + '</a></td>' + 
+	                    '<td>' + c.categoria   +'</td></tr>\n';
+	            }
+	            corpoTabela.innerHTML = linhasTabela;
+	        }
 
-					function preencherTabela(games) {
-						var linhasTabela = '';
-						var n = games.length;
-						for (var i=0; i<n; i++) {
-							var g = games[i];
-							linhasTabela += 
-								`<tr><td><a href="javascript:void(0)" onclick="selecionarGame('${g.id}', '${g.nome}', '${g.categoria}', '${g.url}','${g.descricao}','${g.imagem}')">`
-							             + g.id     + '</a></td>' + 
-			                    '<td>' + g.nome   + '</td>' +
-			                    '<td>' + g.categoria   + '</td>' +
-			                    '<td>' + g.url   + '</td>' +
-			                    '<td>' + g.descricao + '</td>'+
-			                    '<td>'+ g.imagem + '</td></tr>\n';
-						}          
-						corpoTabela.innerHTML = linhasTabela;
-					}
-					
-					function selecionarGame(id, nome, categoria, url, descricao, imagem) {
-					    paragrafoMensagem.innerHTML = 'Altere e salve os dados do jogo, ou então apague o registro do jogo.'
-					    txtId.value = id;
-					    txtNome.value = nome;
-					    txtCategoria.value = categoria;
-					    txtUrl.value= url;
-					    txtDescricao.value = descricao;
-					    txtImagem.value = imagem;
-					    txtId.disabled = true;
-					    txtNome.disabled = false;
-					 	txtCategoria.disabled = false;
-					   	txtUrl.disabled = false;
-					   	txtDescricao.disabled = false;
-					    txtImagem.disabled = false;
-					    btnNovo.disabled = true;
-					    btnSalvar.disabled = false;
-					    btnApagar.disabled = false;
-					    btnCancelar.disabled = false; 
-					}
-					
-					function novoGame() {
-					    paragrafoMensagem.innerHTML = 'Preencha os dados do novo jogo...';
-					    criandoNovoGame = true; 
-					    txtId.value = '';
-					    txtNome.value = '';
-					    txtCategoria.value = '';
-					    txtUrl.value = '';
-					    txtDescricao.value = '';
-					    txtImagem.value = '';
-					    txtId.disabled = true;
-					    txtNome.disabled = false;
-					 	txtCategoria.disabled = false;
-					   	txtUrl.disabled = false;
-					   	txtDescricao.disabled = false;
-					    txtImagem.disabled = false;
-					    btnNovo.disabled = true;
-					    btnSalvar.disabled = false;
-					    btnApagar.disabled = true;
-					    btnCancelar.disabled = false;
-					       
-					}
-					
-					async function salvarGame() {
-					    if (criandoNovoGame) {
-					        fetch('/api/games', {
-					            method: 'POST',
-					            body: JSON.stringify({
-					                'nome': txtNome.value,
-					                'categoria': txtCategoria.value,
-					                'url': txtUrl.value,
-					                'descricao': txtDescricao.value,
-					                'imagem': txtImagem.value
-					               
-					            }),
-					            headers: {'Content-type': 'application/json'}
-					        })
-					        .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
-					        .then(resposta => resposta.json())
-					        .then(json => inicializar())
-					        .catch(function(error) {
-					            paragrafo.innerHTML = "Erro ao criar jogos (código " + error.message + ")";
-					        });  
-					    }
-					    else {
-					        fetch('/api/games/' + txtId.value, {
-					            method: 'PUT',
-					            body: JSON.stringify({
-					                'id': txtId.value,
-					                'nome': txtNome.value,
-					                'categoria': txtCategoria.value,
-					                'url': txtUrl.value,
-					                'descricao': txtDescricao.value,
-					                'imagem': txtImagem.value
-					            }),
-					            headers: {'Content-type': 'application/json'}
-					        })
-					        .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
-					        .then(resposta => resposta.json())
-					        .then(json => inicializar())
-					        .catch(function(error) {
-					            paragrafo.innerHTML = "Erro ao alterar jogos (código " + error.message + ")";
-					        });         
-					    }  
-					}
-					
-					function cancelarEdicao() {
-						inicializar();
-					}
-					
-					async function apagarGame() {
-						fetch('/api/games/' + txtId.value, {method: 'DELETE'} )
-					    .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
-					    .then(resposta => inicializar())
-					    .catch(function(error) {
-					        paragrafo.innerHTML = "Erro ao apagar game (código " + error.message + ")";
-					    });
-					}
-        </script>
-	</body>
-</html>	        
+	        
+	        
+	        function selecionarCategoria(id, categoria) {
+	        	criandoNovoCat = false;
+	            paragrafoMensagem.innerHTML = 'Altere e salve os dados do game, ou então apague o registro do Game.'
+	            txtId.value = id;
+	            txtCat.value = categoria;
+	            txtId.disabled = true;
+	            txtCat.disabled = false;
+	            btnNovo.disabled = true;
+	            btnSalvar.disabled = false;
+	            btnApagar.disabled = false;
+	            btnCancelar.disabled = false;  
+	        }
+	        
+
+	        function novoCategoria() {
+	        	paragrafoMensagem.innerHTML = 'Preencha os dados da nova Categoria...';
+	        	criandoNovoCat = true;
+	        	txtId.value = '';
+	        	txtCat.value = '';
+	        	txtId.disabled = true;
+	        	txtCat.disabled = false;
+	        	btnNovo.disabled = true;
+	        	btnSalvar.disabled = false;
+	        	btnApagar.disabled = true;
+	        	btnCancelar.disabled = false;
+	        }
+	        
+	        function salvarCategoria() {
+	        	if (criandoNovoCat) {
+	        		criarCategoria();
+	        	}
+	        	else {
+	        		alterarCategoria();
+	        	}
+	        }
+	        
+	        async function criarCategoria() {
+	        	const URL = `/api/categorias`;
+	        	const dadosCategoria ={
+	        		'categoria': txtCat.value,	
+	        	};
+	        	const postRequest = {
+	        		method: 'POST',
+	        		body: JSON.stringify(dadosCategoria),
+	        		headers: { 'Content-type': 'application/json' }
+	        	};
+	        	fetch(URL, postRequest)
+	        		.then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
+	        		.then(resposta => resposta.json())
+	        		.then(jsonResponse => inicializar())
+	        		.catch(function(error) { paragrafoMensagem.innerHTML = 'Erro ao criar novo game (código ' + error.message + ')'; } );
+	        }
+	        
+	        async function alterarCategoria() {
+	        	const ID = txtId.value;
+	        	const URL = `/api/categorias/${ID}`;
+	        	const dadosCategoria = {
+	        			'id': ID,
+	        			'categoria': txtCat.value
+	        	};
+	        	const putRequest = {
+	        		method: 'PUT',
+	        		body: JSON.stringify(dadosCategoria),
+	        		headers: { 'Content-type': 'application/json' }
+	        	};
+	        	fetch(URL, putRequest)
+	        		.then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
+	        		.then(resposta => resposta.json())
+	        		.then(jsonResponse => inicializar())
+	        		.catch(function(error) { paragrafoMensagem.innerHTML = 'Erro ao alterar Game (código ' + error.message + ')'; } );	        	
+	        }
+	        
+	        function cancelarEdicao() {
+	        	inicializar();
+	        }
+	        
+	        async function apagarCategoria() {
+	        	const ID = txtId.value;
+	        	const URL = `/api/categorias/${ID}`;
+	        	const deleteRequest = {
+	        		method: 'DELETE'
+	        	};
+	        	fetch(URL, deleteRequest)
+	        		.then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta; } )
+	        		.then(resposta => inicializar())
+	        		.catch(function(error) { paragrafoMensagem.innerHTML = 'Erro ao apagar game (código ' + error.message + ')'; } );	        		
+	        }
+	        
+	    </script>    
+    </body>
+    
+</html>
